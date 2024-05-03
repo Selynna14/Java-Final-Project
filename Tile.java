@@ -3,7 +3,7 @@
 *
 * @author Neysa Thota, Selynna Song, Tate Sommer, Sejal Sharma 
 * @version 1.0
-* @since: 04/22/2024
+* @since 04/22/2024
 */ 
 
 import java.io.*;//needed to generate random values
