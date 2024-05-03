@@ -1,9 +1,9 @@
 /**
 *add purpose of program
 *
-* @author Neysa Thota
+* @author Neysa Thota, Selynna Song, Tate Sommer, Sejal Sharma 
 * @version 1.0
-* @since: 4/22/2024
+* @since: 04/22/2024
 */ 
 
 import java.io.*;//needed to generate random values
@@ -15,7 +15,10 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-
+/**
+*  
+*
+*/
 
 public class Tile
 {	
