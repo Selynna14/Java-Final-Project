@@ -3,7 +3,7 @@
 *
 * @author Neysa Thota
 * @version 1.0
-* date: 4/22/2024
+* @since 4/22/2024
 */ 
 
 import java.io.*;//needed to generate random values
