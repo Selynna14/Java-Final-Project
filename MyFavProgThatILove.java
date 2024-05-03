@@ -1,5 +1,5 @@
 /**
-*add purpose of program
+* Creates game panel
 *
 * @author Neysa Thota
 * @version 1.0
