@@ -11,7 +11,7 @@ import java.util.*;//needed for scanner
 import java.awt.event.*;//needed for keylistener and keyevent
 
 
-public class Player implements KeyListener
+public class Player 
 {
 	/*make all instance variables
 	String userName
@@ -22,45 +22,46 @@ public class Player implements KeyListener
 	*/
 	String name;
 	GamePanel gp;
+	KeyPressProg key;
+	public boolean upPressed, downPressed, leftPressed, rightPressed;
 	
 	double screenHeight;
 	double screenWidth;
 	
-	public Player(GamePanel gp)
+	public Player(GamePanel gp, KeyPressProg key)
 	{
 		this.gp = gp;
-		this.gp.addKeyListener(this);
-		this.screenHeight = gp.screenHeight;
-		this.screenWidth = gp.screenWidth;
-		
+		this.key = key;
+		//this.gp.addKeyListener(this);
+		//gp.addKeyListener(this);	
 	}
-	
-	public boolean upPressed, downPressed, leftPressed, rightPressed;
 	
 	int x = 100;
 	int y = 100;
-	int speed = 4;
+	int speed = 6;
 
 	
 	public void update()
 	{
-		if (upPressed == true && y > 0)
+		if (key.upPressed == true && y > 0)
 		{
 			y-= speed;
 		}
-		else if (downPressed == true &&  y < screenHeight)
+		else if (key.downPressed == true &&  y <( gp.screenHeight - gp.tileSize))
 		{
 			y += speed;
+			
 		}
-		else if (leftPressed == true && x > 0)
+		else if (key.leftPressed == true && x > 0)
 		{
 			x -= speed;
 		}
-		else if (rightPressed == true )
+		else if (key.rightPressed == true  && x < (gp.screenWidth-gp.tileSize))
 		{
 			x += speed;
 		}
 	}
+	
 	public String getName ()
 	{
 		Scanner x = new Scanner(System.in);
@@ -80,63 +81,13 @@ public class Player implements KeyListener
 	//drawing character
     public void draw(Graphics2D g)
     {
-		ImageIcon icon = new ImageIcon("n.png");
+		
+		ImageIcon icon = new ImageIcon("Forward_character.png");
 		Image image = icon.getImage();
-		g.drawImage(image, x, y, null);
+		g.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		//g.drawImage(image, x, y, null);
 	}
     
-	//to move character
-	public void keyTyped(KeyEvent e)
-	{
-	   
-	}
-	public void keyPressed(KeyEvent e) 
-    {
-        int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W)
-        {
-			upPressed = true;
-			System.out.println("working w");
-		}
-		else if (code == KeyEvent.VK_S)
-		{
-			downPressed = true;
-			System.out.println("working s");
-		}
-		else if (code == KeyEvent.VK_A)
-		{
-			leftPressed = true;
-			System.out.println("working a");
-		}
-		else if (code == KeyEvent.VK_D)
-		{
-			rightPressed = true;
-			System.out.println("working d");
-		}
-	}
-    public void keyReleased(KeyEvent e) 
-    {
-         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_W)
-        {
-			upPressed = false;
-			System.out.println("working l");
-		}
-		else if (code == KeyEvent.VK_S)
-		{
-			downPressed = false;
-			System.out.println("working l");
-		}
-		else if (code == KeyEvent.VK_A)
-		{
-			leftPressed = false;
-			System.out.println("working l");
-		}
-		else if (code == KeyEvent.VK_D)
-		{
-			rightPressed = false;
-			System.out.println("working l");
-		}
-    }
+	
 
 }
