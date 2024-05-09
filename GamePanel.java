@@ -1,17 +1,23 @@
+/**
+*This file contains all the code for updating and printing the game and screen 
+*
+* @author Neysa Thota
+* @version 1.0
+* date: 4/22/2024
+*/ 
 
+import java.awt.*;//needed for graphic s and color
+import javax.swing.*;//needed for the JPanel 
+import java.util.*;//needed for scanner
+import javax.imageio.ImageIO;//needed to use images
 import java.io.*;//needed to generate random values
-import java.util.*;//neede for scanner
-import java.awt.*;//needed for graphic 
-import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.*;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
 public class GamePanel extends JPanel implements Runnable
 {
+	/**
+	 *Instance Variables 
+	 */
+	 
 	final int originalTileSize = 16;
 	final int scale = 4;
 	
@@ -27,24 +33,31 @@ public class GamePanel extends JPanel implements Runnable
 	Thread h;
 	
 	Tile[] tile;
-
-	KeyPressProg key = new KeyPressProg();
-	MapBackground mp = new MapBackground();
-	Player p = new Player(this, key);
+	int mapTileNum[][];
+	//MapBackground mp = new MapBackground(this);
+	Player p = new Player(this);
+	
+	//world vars
+	public int worldX, worldY;
+	public final int maxWorldCol = 22;
+	public final int maxWorldRow = 56;
+	public final int worldWidth = tileSize  * maxWorldCol;
+	public final int worldHeight = tileSize * maxWorldRow;
 	
 	
 	GamePanel()
 	{
 		this.setPreferredSize(new Dimension (screenWidth, screenHeight));
-		this.setDoubleBuffered(true);
+		
 		Color b = new Color(101,67,33);
 		this.setBackground(b);
-		this.addKeyListener(key);
+		this.setDoubleBuffered(true);
+		this.addKeyListener(p);
 		this.setFocusable(true);
-		this.requestFocusInWindow();
-
 		
 		tile = new Tile[10];
+		mapTileNum = new int [maxWorldCol][maxWorldRow];
+		
 	}
 	
 	public void getTileImage()
@@ -73,12 +86,110 @@ public class GamePanel extends JPanel implements Runnable
 			tile[6] = new Tile();
 			tile[6].image = ImageIO.read(new File("door.png"));
 			
+			tile[7] = new Tile();
+			tile[7].image = ImageIO.read(new File("table.png"));
+			
+			tile[8] = new Tile();
+			tile[8].image = ImageIO.read(new File("Chair.png"));
+			
+			tile[9] = new Tile();
+			tile[9].image = ImageIO.read(new File("Pile_of_clothes.png"));
+			
 		}
 		catch(Exception e)
 		{
+			System.out.println(e);
 		}
 	}
-
+	
+	public void loadMap(String map)
+	{
+		
+		try 
+		{
+				
+				File file = new File(map);
+				Scanner br = new Scanner(file);
+				
+				int col = 0;
+				int row = 0;
+				
+				while (col <  maxWorldCol && row <  maxWorldRow)
+				{
+					String line = br.nextLine();
+					
+					while(col <  maxWorldCol)
+					{
+						String numbers[] = line.split(" ");
+						
+						int num = Integer.parseInt(numbers[col]);
+						
+						mapTileNum[col][row] = num;
+						
+						col++;
+					}
+					
+					if (col ==  maxWorldCol)
+					{
+						col = 0;
+						row++;
+					}
+					//br.close();
+				}
+		
+		}
+		catch (Exception e)
+		{
+			System.out.println(e + "d");
+		}
+	}
+	
+	public void drawA(Graphics2D g)
+	{
+		try
+		{
+			getTileImage();
+			loadMap("Map01Floor1.txt");
+			
+			int worldCol = 0;
+			int worldRow = 0;
+			
+			
+			while (worldCol <  maxWorldCol && worldRow <  maxWorldRow)
+			{
+				
+				int tileNum = mapTileNum[worldCol][worldRow];
+				
+				int worlX = worldCol * tileSize;
+				int worlY = worldRow * tileSize;
+				int screenX = worlX - (worldX + p.screenX);
+				int screenY = worlY - (worldY + p.screenY);
+				
+				if (tileNum == 0)
+				{
+				}
+				else
+				{
+					g.drawImage(tile[tileNum].image, screenX, screenY,  tileSize,  tileSize, null);
+				}
+				
+				worldCol++;
+				
+				
+				if (worldCol ==  maxWorldCol)
+				{
+					worldCol = 0;
+					worldRow++;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e + "jfdkljf");
+		}
+	
+		
+	}
     public void startGameThread()
     {
 		h = new Thread(this);
@@ -92,7 +203,8 @@ public class GamePanel extends JPanel implements Runnable
 		
 		while (h != null)
 		{
-			update();
+			
+			p.update();
 			repaint();
 			
 			try
@@ -118,70 +230,13 @@ public class GamePanel extends JPanel implements Runnable
 		p.update();
 	}
 	
-	public void drawGroundFloor(Graphics2D g)
-	{
-		getTileImage();
-		
-		int col = 0;
-		int row = 0;
-		int t = 0;
-		int f = 0;
-		try
-		{
-			while(row == 0 || row == screenRows)
-			{
-				g.drawImage(tile[1].image, t, f, tileSize, tileSize, null);
-
-				//System.out.println("do smth" + col);
-				col++;
-				t += tileSize;
-				
-				if(col == screenColums)
-				{
-					col = 0;
-					t = 0;
-					row += screenRows;
-					f += (screenHeight-tileSize);//?
-					//System.out.println("do" + col);
-				}
-			}
-			
-			col = 0;
-			row = 0;
-			t = 0;
-			f = 0;
-			
-			for (int i = 0; i < screenColums; i++)
-			{
-				g.drawImage(tile[1].image, (0), (i*tileSize), tileSize, tileSize, null);
-			}
-			
-			for (int i = 0; i < screenColums; i++)
-			{
-				g.drawImage(tile[1].image, (screenWidth - tileSize), (i*tileSize), tileSize, tileSize, null);
-			}
-				
-			g.drawImage(tile[2].image, (0), (8*tileSize), tileSize, tileSize, null);
-			g.drawImage(tile[3].image, (0), (7*tileSize), tileSize, tileSize, null);
-			g.drawImage(tile[4].image, (20*tileSize), (8*tileSize), tileSize, tileSize, null);
-			g.drawImage(tile[5].image, (5*tileSize), (5*tileSize), tileSize, tileSize, null);
-			g.drawImage(tile[6].image, (6*tileSize), (6*tileSize), tileSize, tileSize, null);
-				
-
-		}
-		catch(Exception e)
-		{
-			System.out.println(e);
-		}
-	}
-		
 	
 	public void paintComponent(Graphics g) 
 	{
 		super.paintComponent(g);
 		Graphics2D g2D = (Graphics2D)g;
 		
-		drawGroundFloor(g2D);
+		drawA(g2D);
 		
 		p.draw(g2D);
 		
