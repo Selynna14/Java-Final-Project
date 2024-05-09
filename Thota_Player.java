@@ -11,7 +11,7 @@ import java.util.*;//needed for scanner
 import java.awt.event.*;//needed for keylistener and keyevent
 
 
-public class Player implements KeyListener
+public class Thota_Player implements KeyListener
 {
 	/*make all instance variables
 	String userName
