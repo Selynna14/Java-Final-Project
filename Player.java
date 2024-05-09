@@ -1,5 +1,5 @@
 /**
-*add purpose of program
+*This is where all the code for the player exists. 
 *
 * @author Neysa Thota
 * @version 1.0
@@ -11,7 +11,7 @@ import java.util.*;//needed for scanner
 import java.awt.event.*;//needed for keylistener and keyevent
 
 
-public class Player 
+public class Player implements KeyListener
 {
 	/*make all instance variables
 	String userName
@@ -20,53 +20,64 @@ public class Player
 	Make hand variable
 	Make sword variable
 	*/
+	
+	/**
+	 *Instance Variables 
+	 */
+	
 	String name;
 	GamePanel gp;
-	KeyPressProg key;
-	public boolean upPressed, downPressed, leftPressed, rightPressed;
 	
 	double screenHeight;
 	double screenWidth;
 	
-	public Player(GamePanel gp, KeyPressProg key)
+	public boolean upPressed, downPressed, leftPressed, rightPressed;
+	
+	public final int screenX;
+	public final int screenY;
+	
+	int speed = 7;
+	
+	public Player(GamePanel gp)
 	{
 		this.gp = gp;
-		this.key = key;
-		//this.gp.addKeyListener(this);
-		//gp.addKeyListener(this);	
-	}
+		this.gp.addKeyListener(this);
+		this.screenHeight = gp.screenHeight;
+		this.screenWidth = gp.screenWidth;
 	
-	int x = 100;
-	int y = 100;
-	int speed = 6;
-
+		screenX = gp.screenWidth/2;
+		screenY = gp.screenHeight/2;
+		
+		gp.worldX = -700;
+		gp.worldY = 100;
+		
+	}
 	
 	public void update()
 	{
-		if (key.upPressed == true && y > 0)
+		if (upPressed == true)
 		{
-			y-= speed;
+			gp.worldY-= speed;
 		}
-		else if (key.downPressed == true &&  y <( gp.screenHeight - gp.tileSize))
+		else if (downPressed == true )
 		{
-			y += speed;
-			
+			gp.worldY += speed;
 		}
-		else if (key.leftPressed == true && x > 0)
+		else if (leftPressed == true )
 		{
-			x -= speed;
+			gp.worldX -= speed;
 		}
-		else if (key.rightPressed == true  && x < (gp.screenWidth-gp.tileSize))
+		else if (rightPressed == true )
 		{
-			x += speed;
+			gp.worldX += speed;
 		}
 	}
 	
 	public String getName ()
 	{
-		Scanner x = new Scanner(System.in);
+		Scanner s = new Scanner(System.in);
 		System.out.println("What is your name");
-		name = x.nextLine();
+		name = s.nextLine();
 		return name;
 	}
 
@@ -81,13 +92,65 @@ public class Player
 	//drawing character
     public void draw(Graphics2D g)
     {
-		
 		ImageIcon icon = new ImageIcon("Forward_character.png");
 		Image image = icon.getImage();
-		g.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
-		//g.drawImage(image, x, y, null);
+		g.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 	}
     
+	//to move character
+	public void keyTyped(KeyEvent e)
+	{
+	   
+	}
 	
+	public void keyPressed(KeyEvent e) 
+    {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_W)
+        {
+			upPressed = true;
+			System.out.println("working w");
+		}
+		else if (code == KeyEvent.VK_S)
+		{
+			downPressed = true;
+			System.out.println("working s");
+		}
+		else if (code == KeyEvent.VK_A)
+		{
+			leftPressed = true;
+			System.out.println("working a");
+		}
+		else if (code == KeyEvent.VK_D)
+		{
+			rightPressed = true;
+			System.out.println("working d");
+		}
+	}
+	
+    public void keyReleased(KeyEvent e) 
+    {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_W)
+        {
+			upPressed = false;
+			System.out.println("working l");
+		}
+		else if (code == KeyEvent.VK_S)
+		{
+			downPressed = false;
+			System.out.println("working l");
+		}
+		else if (code == KeyEvent.VK_A)
+		{
+			leftPressed = false;
+			System.out.println("working l");
+		}
+		else if (code == KeyEvent.VK_D)
+		{
+			rightPressed = false;
+			System.out.println("working l");
+		}
+    }
 
 }
