@@ -1,5 +1,5 @@
 /**
-*add purpose of program
+* main program
 *
 * @author Neysa Thota
 * @version 1.0
@@ -26,7 +26,7 @@ public class MyFavProgThatILove
 
 		panel.startGameThread();//starting game thread
 		/*String[] yesNo = {"Yes","No"};
-		String input = (String) JOptionPane.showInputDialog(null,"Do you want to playe? (Y/N): ", "", JOptionPane.QUESTION_MESSAGE, null, yesNo, yesNo[1]);
+		String input = (String) JOptionPane.showInputDialog(null,"Do you want to play? ", "", JOptionPane.QUESTION_MESSAGE, null, yesNo, yesNo[1]);
 		
 		if (input.equals("Yes"))
 		{
