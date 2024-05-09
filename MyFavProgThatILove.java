@@ -31,6 +31,8 @@ public class MyFavProgThatILove
 		if (input.equals("Yes"))
 		{
 			panel.startGameThread();//starting game thread
+   			String[] loadFile = {"1","2", "3"};
+			String input2 = (String) JOptionPane.showInputDialog(null,"Which file do you want to play out of? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
 		}
 		else 
 		{
