@@ -11,12 +11,7 @@ import java.nio.file.Paths;
 */
 
 public class Sommer_saveFiles
-{ // start class 
-	
-	String line1;
-	String line2;
-	String line3;
-		
+{ // start class 		
 	try
 	{ // starts try
 		File fileOne = new File("fileOne.txt"); // Go find and load file
@@ -26,13 +21,11 @@ public class Sommer_saveFiles
 		}
 		else
 		{
-			System.out.println("Wait");
-			line1 = Files.readAllLines(Paths.get("fileOne.txt")).get(0);
-			line2 = Files.readAllLines(Paths.get("fileOne.txt")).get(1);
-			line3 = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
-			System.out.println(line1);
-			System.out.println(line2);
-			System.out.println(line3);
+			String name = Files.readAllLines(Paths.get("fileOne.txt")).get(0);
+			String line2 = Files.readAllLines(Paths.get("fileOne.txt")).get(1);
+			String line3 = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
+			int health = Integer.parseInt(line2);
+			int floor = Integer.parseInt(line3);
 		}
 
 	} // ends try
