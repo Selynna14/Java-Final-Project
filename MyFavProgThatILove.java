@@ -7,6 +7,10 @@
 */ 
 import java.awt.*;//needed for graphic 
 import javax.swing.*;//needed for the JFrame
+import java.io.*; // imports needed for files
+import java.nio.file.Files; 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MyFavProgThatILove
 {	
