@@ -29,8 +29,8 @@ public class MyFavProgThatILove
 
 
 		panel.startGameThread();//starting game thread
-		int health, floor;
-		String name, line1, lin2;
+		int health;
+		String name,floor, lin2;
 		String[] yesNo = {"Yes","No"};
 		String input = (String) JOptionPane.showInputDialog(null,"Do you want to play? ", "", JOptionPane.QUESTION_MESSAGE, null, yesNo, yesNo[1]);
 		
@@ -52,9 +52,8 @@ public class MyFavProgThatILove
 					{
 						name = Files.readAllLines(Paths.get("fileOne.txt")).get(0);
 						line2 = Files.readAllLines(Paths.get("fileOne.txt")).get(1);
-						line3 = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
+						floor = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
 						health = Integer.parseInt(line2);
-						floor = Integer.parseInt(line3);
 					}
 			
 				} // ends try
@@ -77,9 +76,8 @@ public class MyFavProgThatILove
 					{
 						name = Files.readAllLines(Paths.get("fileTwo.txt")).get(0);
 						line2 = Files.readAllLines(Paths.get("fileTwo.txt")).get(1);
-						line3 = Files.readAllLines(Paths.get("fileTwo.txt")).get(2);
+						floor = Files.readAllLines(Paths.get("fileTwo.txt")).get(2);
 						health = Integer.parseInt(line2);
-						floor = Integer.parseInt(line3);
 					}
 			
 				} // ends try
@@ -102,9 +100,8 @@ public class MyFavProgThatILove
 					{
 						name = Files.readAllLines(Paths.get("fileThree.txt")).get(0);
 						line2 = Files.readAllLines(Paths.get("fileThree.txt")).get(1);
-						line3 = Files.readAllLines(Paths.get("fileThree.txt")).get(2);
+						floor = Files.readAllLines(Paths.get("fileThree.txt")).get(2);
 						health = Integer.parseInt(line2);
-						floor = Integer.parseInt(line3);
 					}
 			
 				} // ends try
