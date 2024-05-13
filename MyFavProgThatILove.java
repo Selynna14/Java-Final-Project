@@ -25,6 +25,8 @@ public class MyFavProgThatILove
 
 
 		panel.startGameThread();//starting game thread
+		int health, floor;
+		String name, line1, lin2;
 		String[] yesNo = {"Yes","No"};
 		String input = (String) JOptionPane.showInputDialog(null,"Do you want to play? ", "", JOptionPane.QUESTION_MESSAGE, null, yesNo, yesNo[1]);
 		
