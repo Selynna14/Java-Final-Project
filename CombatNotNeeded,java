@@ -1,0 +1,48 @@
+//Make array WeaponList. When you encounter a Weapon
+
+
+public class CombatNotNeeded// can be deleted
+{// can be deleted
+
+	Public Combat()
+	{
+		boolean combat = true;
+		while (combat = true)
+		{
+			int Damge = 0; 
+			if (near the Skeleton) //need colitions
+			{
+				Monsters Skeleton = new Skeletons();//make a house!
+				MonsterHealth = Skeleton.getMonsterHealth;
+				while (MonsterHealth > 0)
+				{
+				
+					input = (String) JOptionPane.showInputDialog(null,"How would you like to attack?", "", JOptionPane.QUESTION_MESSAGE, null, WeponList, WeponList[1]);
+					switch(input) 
+					{
+						case 'Hand': // code block 
+							Damage = random(0,5); 
+							break;
+						case 'Axe': // code block 
+							Damage = random(5,10); 
+							break;
+						case 'Sword': // code block 
+							Damage = random(8,12);
+							break;
+						case 'Poison Sword': // code block 
+							Damage = random(10,14);
+							break;
+						case 'Poison Axe': // code block 
+							Damage = random(7,12);
+							break;
+						default: // code block 
+					} 
+				MonsterHealth = MonsterHealth - Damage;
+
+				Damage = Skeleton.getMonsterDamage;
+				Player health = Player health - Damage; //need player health
+				} 
+			}
+		}
+	}
+}// can be deleted
