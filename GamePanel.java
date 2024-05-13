@@ -94,6 +94,9 @@ public class GamePanel extends JPanel implements Runnable
 			
 			tile[9] = new Tile();
 			tile[9].image = ImageIO.read(new File("Pile_of_clothes.png"));
+
+			tile[10] = new Tile();
+			tile[10].image = ImageIO.read(new File("Improved_stairs.png"));
 			
 		}
 		catch(Exception e)
