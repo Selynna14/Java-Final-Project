@@ -12,40 +12,32 @@ import java.nio.file.Paths;
 
 public class Sommer_saveFiles
 { // start class 
-	public static void main(String [] args)
-	{ // starts main
-		String line1;
-		String line2;
-		String line3;
-		
-		try
-		{ // starts try
-			File fileOne = new File("fileOne.txt"); // Go find and load file
-			PrintWriter pW = new PrintWriter(fileOne);
-			pW.println("name");
-			pW.println("floor");
-			pW.println("health");
-			pW.close();
-			if (fileOne.createNewFile())
-			{
-				System.out.println("Good");
-			}
-			else
-			{
-				System.out.println("Wait");
-				line1 = Files.readAllLines(Paths.get("fileOne.txt")).get(0);
-				line2 = Files.readAllLines(Paths.get("fileOne.txt")).get(1);
-				line3 = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
-				System.out.println(line1);
-				System.out.println(line2);
-				System.out.println(line3);
-			}
-
-		} // ends try
-		catch(Exception e)
-		{ // starts catch
-			System.out.println("Error! " + e);
-		} // ends catch
 	
-	} // ends main
+	String line1;
+	String line2;
+	String line3;
+		
+	try
+	{ // starts try
+		File fileOne = new File("fileOne.txt"); // Go find and load file
+		if (fileOne.createNewFile())
+		{
+			System.out.println("Good");
+		}
+		else
+		{
+			System.out.println("Wait");
+			line1 = Files.readAllLines(Paths.get("fileOne.txt")).get(0);
+			line2 = Files.readAllLines(Paths.get("fileOne.txt")).get(1);
+			line3 = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
+			System.out.println(line1);
+			System.out.println(line2);
+			System.out.println(line3);
+		}
+
+	} // ends try
+	catch(Exception e)
+	{ // starts catch
+		System.out.println("Error! " + e);
+	} // ends catch
 } // ends class
