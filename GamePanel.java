@@ -87,16 +87,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			tile[5].image = ImageIO.read(new File("Window.png"));
 			
 			tile[6] = new Tile();
-			tile[6].image = ImageIO.read(new File("door.png"));
+			tile[6].image = ImageIO.read(new File("Door.png"));
 			//furniture
 			tile[10] = new Tile();
-			tile[10].image = ImageIO.read(new File("Chair.png"));
+			tile[10].image = ImageIO.read(new File("chair.png"));
 
 			tile[11] = new Tile();
-			tile[11].image = ImageIO.read(new File("Table.png"));
+			tile[11].image = ImageIO.read(new File("table.png"));
 
 			tile[12] = new Tile();
-			tile[12].image = ImageIO.read(new File("Cabinet.png"));
+			tile[12].image = ImageIO.read(new File("cabinet.png"));
 
 			tile[13] = new Tile();
 			tile[13].image = ImageIO.read(new File("chest.png"));
