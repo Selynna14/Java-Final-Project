@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			tile[0].image = ImageIO.read(new File("Floorboard.png"));
 			
 			tile[1] = new Tile();
-			tile[1].image = ImageIO.read(new File("Grayfloor.png"));
+			tile[1].image = ImageIO.read(new File("Gray_Floor.png"));
 			tile[1].collison = true;
 			
 			tile[2] = new Tile();
@@ -90,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			tile[6].image = ImageIO.read(new File("Door.png"));
 			//furniture
 			tile[10] = new Tile();
-			tile[10].image = ImageIO.read(new File("chair.png"));
+			tile[10].image = ImageIO.read(new File("Chair.png"));
 
 			tile[11] = new Tile();
 			tile[11].image = ImageIO.read(new File("table.png"));
@@ -105,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			tile[14].image = ImageIO.read(new File("Pile_of_clothes.png"));
 
 			tile[15] = new Tile();
-			tile[15].image = ImageIO.read(new File("Scroll.png"));
+			tile[15].image = ImageIO.read(new File("Closed_scroll.png"));
 			// monsters
 			tile[20] = new Tile();
 			tile[20].image = ImageIO.read(new File("Zombie.png"));
@@ -120,13 +120,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			tile[23].image = ImageIO.read(new File("Pixies.png"));
 
 			tile[24] = new Tile();
-			tile[24].image = ImageIO.read(new File("Soul_orb.png"));
+			tile[24].image = ImageIO.read(new File("Soul_Orb.png"));
 			//weapons
 			tile[30] = new Tile();
-			tile[30].image = ImageIO.read(new File("Woodenaxe.png"));
+			tile[30].image = ImageIO.read(new File("woodAxe.png"));
 			
 			tile[31] = new Tile();
-			tile[31].image = ImageIO.read(new File("Ironsword.png"));
+			tile[31].image = ImageIO.read(new File("IronSword.png"));
 			
 		}
 		catch(Exception e)
