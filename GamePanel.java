@@ -1,18 +1,19 @@
 /**
-*This file contains all the code for updating and printing the game and screen 
+*This file contains all the code for updating and printing the game and screen, and redrwaing each frame of the screen
 *
 * @author Neysa Thota
 * @version 1.0
 * date: 4/22/2024
 */ 
 
-import java.awt.*;//needed for graphic s and color
+import java.awt.*;//needed for graphics and color
 import javax.swing.*;//needed for the JPanel 
 import java.util.*;//needed for scanner
 import javax.imageio.ImageIO;//needed to use images
 import java.io.*;//needed to generate random values
+import java.awt.event.*;//needed for keylistener and keyevent
 
-public class GamePanel extends JPanel implements Runnable
+public class GamePanel extends JPanel implements Runnable, KeyListener
 {
 	/**
 	 *Instance Variables 
@@ -37,10 +38,12 @@ public class GamePanel extends JPanel implements Runnable
 	//MapBackground mp = new MapBackground(this);
 	Player p = new Player(this);
 	
+	String currLevel = "0";
+	
 	//world vars
 	public int worldX, worldY;
-	public final int maxWorldCol = 22;
-	public final int maxWorldRow = 56;
+	public final int maxWorldCol = 64;
+	public final int maxWorldRow = 67;
 	public final int worldWidth = tileSize  * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
 	
@@ -52,10 +55,10 @@ public class GamePanel extends JPanel implements Runnable
 		Color b = new Color(101,67,33);
 		this.setBackground(b);
 		this.setDoubleBuffered(true);
-		this.addKeyListener(p);
+		this.addKeyListener(this);
 		this.setFocusable(true);
 		
-		tile = new Tile[10];
+		tile = new Tile[11];
 		mapTileNum = new int [maxWorldCol][maxWorldRow];
 		
 	}
@@ -94,14 +97,14 @@ public class GamePanel extends JPanel implements Runnable
 			
 			tile[9] = new Tile();
 			tile[9].image = ImageIO.read(new File("Pile_of_clothes.png"));
-
+			
 			tile[10] = new Tile();
 			tile[10].image = ImageIO.read(new File("Improved_stairs.png"));
 			
 		}
 		catch(Exception e)
 		{
-			System.out.println(e);
+			System.out.println(e + "jhskadhsk");
 		}
 	}
 	
@@ -147,7 +150,7 @@ public class GamePanel extends JPanel implements Runnable
 		}
 	}
 	
-	public void drawA(Graphics2D g)
+	public void drawMap(Graphics2D g)
 	{
 		try
 		{
@@ -192,14 +195,15 @@ public class GamePanel extends JPanel implements Runnable
 		}
 	
 		
-	}
+	}	
+    
     public void startGameThread()
     {
 		h = new Thread(this);
 		h.start();
 	}
-    
-	public void run()
+    	
+    public void run()
 	{
 		double drawInterval = 1000000000/FPS;
 		double nextDrawTime = System.nanoTime() + drawInterval;
@@ -233,17 +237,117 @@ public class GamePanel extends JPanel implements Runnable
 		p.update();
 	}
 	
-	
 	public void paintComponent(Graphics g) 
 	{
 		super.paintComponent(g);
 		Graphics2D g2D = (Graphics2D)g;
 		
-		drawA(g2D);
+		drawMap(g2D);
 		
 		p.draw(g2D);
 		
 		g.dispose();
     }
   
+	//to move character
+	public void keyTyped(KeyEvent e)
+	{
+	   
+	}
+	
+	public void keyPressed(KeyEvent e) 
+    {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_W)
+        {
+			p.upPressed = true;
+			System.out.println("working w");
+		}
+		else if (code == KeyEvent.VK_S)
+		{
+			p.downPressed = true;
+			System.out.println("working s");
+		}
+		else if (code == KeyEvent.VK_A)
+		{
+			p.leftPressed = true;
+			System.out.println("working a");
+		}
+		else if (code == KeyEvent.VK_D)
+		{
+			p.rightPressed = true;
+			System.out.println("working d");
+		}
+		else if (code == KeyEvent.VK_ESCAPE)
+		{
+			p.rightPressed = true;
+			System.out.println("working esc");
+		}
+	}
+	
+    public void keyReleased(KeyEvent e) 
+    {
+        int code = e.getKeyCode();
+        if (code == KeyEvent.VK_W)
+        {
+			p.upPressed = false;
+			System.out.println("working l");
+		}
+		else if (code == KeyEvent.VK_S)
+		{
+			p.downPressed = false;
+			System.out.println("working l");
+		}
+		else if (code == KeyEvent.VK_A)
+		{
+			p.leftPressed = false;
+			System.out.println("working l");
+		}
+		else if (code == KeyEvent.VK_D)
+		{
+			p.rightPressed = false;
+			System.out.println("working l");
+		}
+    }
+	
+	
+	public void checkCollision()
+	{
+		//predicting how to do collsions
+		int predictLeft = worldX + p.solidArea.x;
+		int predictRight = worldX + p.solidArea.x + p.solidArea.width;
+		int predictTop = worldY + p.solidArea.y;
+		int predictBottom = worldY + p.solidArea.y + p.solidArea.height;
+		
+		int leftCol = predictLeft/tileSize;
+		int rightCol = predictRight/tileSize;
+		int topCol = predictTop/tileSize;
+		int bottomCol = predictBottom/tileSize;
+		
+		//System.out.println(leftCol);
+		//System.out.println(rightCol);
+		//System.out.println(topCol);
+		//System.out.println(bottomCol);
+		
+		
+		int tileNum1, tileNum2;
+		
+		if (p.direction == "up")
+		{
+			//System.out.println("u");
+		}
+		else if (p.direction == "down")
+		{
+			//System.out.println("d");
+		}
+		else if (p.direction == "left")
+		{
+			//System.out.println("l");
+		}
+		else if (p.direction == "right")
+		{
+			//System.out.println("r");
+		}
+		
+	}
 }
