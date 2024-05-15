@@ -309,6 +309,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		{
 			p.rightPressed = true;
 			System.out.println("working esc");
+			SaveFile(name, health, floor);
 		}
 	}
 	
