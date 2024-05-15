@@ -6,7 +6,7 @@ public class CombatNotNeeded// can be deleted
 
 	Public Combat()
 	{
-		boolean combat = true;
+		boolean combat = true; // creates flag variable
 		while (combat = true)
 		{
 			int Damge = 0; 
@@ -14,14 +14,14 @@ public class CombatNotNeeded// can be deleted
 			{
 				Monsters Skeleton = new Skeletons();//make a house!
 				MonsterHealth = Skeleton.getMonsterHealth;
-				while (MonsterHealth > 0)
+				while (MonsterHealth > 0) // loops while the monster is alive
 				{
 				
 					input = (String) JOptionPane.showInputDialog(null,"How would you like to attack?", "", JOptionPane.QUESTION_MESSAGE, null, WeponList, WeponList[1]);
 					switch(input) 
 					{
 						case 'Hand': // code block 
-							Damage = random(0,5); 
+							Damage = random(0,5); // does a random amount of damage from 0 to 4
 							break;
 						case 'Axe': // code block 
 							Damage = random(5,10); 
@@ -37,7 +37,7 @@ public class CombatNotNeeded// can be deleted
 							break;
 						default: // code block 
 					} 
-				MonsterHealth = MonsterHealth - Damage;
+				MonsterHealth = MonsterHealth - Damage; // subtracts damage from monsters health
 
 				Damage = Skeleton.getMonsterDamage;
 				Player health = Player health - Damage; //need player health
