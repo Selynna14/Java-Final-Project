@@ -1,6 +1,13 @@
 import java.util.* // imports for files
 import java.io.*
-
+/**
+    * Saves data to file
+    *
+    * @author Tate Sommer
+    * @version 1.0
+    * date: 5/15/2024
+*/ 
+    
 Public SaveFile(String name, String health, String floor)
 {
     String[] saveFile = {"1","2", "3"}; 
