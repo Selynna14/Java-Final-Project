@@ -129,7 +129,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			tile[31].image = ImageIO.read(new File("IronSword.png"));
 			
 		}
-		catch(Exception e)
+		catch(Exception e) // catches any errors so the code doesn't break
 		{
 			System.out.println(e + " ");
 		}
@@ -171,7 +171,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 				}
 		
 		}
-		catch (Exception e)
+		catch (Exception e) // catch any errors
 		{
 			System.out.println(e + "d");
 		}
@@ -216,7 +216,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 				}
 			}
 		}
-		catch(Exception e)
+		catch(Exception e) // catch any errors
 		{
 			System.out.println(e + "jfdkljf");
 		}
