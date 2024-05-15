@@ -41,9 +41,11 @@ Public class Monsters
     monsterSpeed = null;
     monsterDamage = randObject.nextInt(10,21); //random integer from 10-20 
   }
+
+// get methods for health, damage, and speed
 public int getMonsterHealth()
 {
-	return monsterHealth;
+	return monsterHealth; // 
 }
 public int getMonsterDamage()
 {
