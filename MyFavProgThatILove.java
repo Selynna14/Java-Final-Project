@@ -8,9 +8,9 @@
 import java.awt.*;//needed for graphic 
 import javax.swing.*;//needed for the JFrame
 import java.io.*; // imports needed for files
-import java.nio.file.Files; 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.Files; // needed to save read files
+import java.nio.file.Path; // needed to save read files
+import java.nio.file.Paths; // needed to save read files
 
 public class MyFavProgThatILove
 {	
@@ -29,7 +29,7 @@ public class MyFavProgThatILove
 
 
 		panel.startGameThread();//starting game thread
-		int health;
+		int health; // creates variables to store file data
 		String name,floor, lin2;
 		String[] yesNo = {"Yes","No"};
 		String input = (String) JOptionPane.showInputDialog(null,"Do you want to play? ", "", JOptionPane.QUESTION_MESSAGE, null, yesNo, yesNo[1]);
