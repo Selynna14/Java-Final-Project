@@ -16,7 +16,7 @@ Public SaveFile(String name, String health, String floor)
     {
         try
         {
-            File fileOne = new File("fileOne.txt");
+            File fileOne = new File("fileOne.txt"); // loads file
             PrintWriter write = new PrintWriter(fileOne); // creates file writer 
             write.println(name); // writes important data into file
             write.println(health);
@@ -24,6 +24,9 @@ Public SaveFile(String name, String health, String floor)
             write.println();
             write.close();
         }
+        catch(Exception e)
+            System.out.println("Error");
+           
         
     }
     else if (input.equals("2"))
@@ -38,6 +41,8 @@ Public SaveFile(String name, String health, String floor)
             write.println();
             write.close();
         }
+        catch(Exception e)
+            System.out.println("Error");
     }
     else if (input.equals("3"))
     {
@@ -51,6 +56,8 @@ Public SaveFile(String name, String health, String floor)
             write.println();
             write.close();
         }
+        catch(Exception e)
+            System.out.println("Error");
     }
     else
         System.out.println("?");
