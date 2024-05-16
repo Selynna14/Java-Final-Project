@@ -8,9 +8,9 @@
 import java.awt.*;//needed for graphic 
 import javax.swing.*;//needed for the JFrame
 import java.io.*; // imports needed for files
-import java.nio.file.Files; // needed to save read files
-import java.nio.file.Path; // needed to save read files
-import java.nio.file.Paths; // needed to save read files
+import java.nio.file.Files; 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MyFavProgThatILove
 {	
@@ -29,7 +29,7 @@ public class MyFavProgThatILove
 
 
 		panel.startGameThread();//starting game thread
-		int health; // creates variables to store file data
+		int health;
 		String name,floor, lin2;
 		String[] yesNo = {"Yes","No"};
 		String input = (String) JOptionPane.showInputDialog(null,"Do you want to play? ", "", JOptionPane.QUESTION_MESSAGE, null, yesNo, yesNo[1]);
@@ -48,14 +48,14 @@ public class MyFavProgThatILove
 					{
 						System.out.println("Good");
 					}
-					else
+					/*else
 					{
 						name = Files.readAllLines(Paths.get("fileOne.txt")).get(0);
 						line2 = Files.readAllLines(Paths.get("fileOne.txt")).get(1);
 						floor = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
 						health = Integer.parseInt(line2);
 					}
-			
+			*/
 				} // ends try
 				catch(Exception e)
 				{ // starts catch
@@ -72,14 +72,14 @@ public class MyFavProgThatILove
 					{
 						System.out.println("Good");
 					}
-					else
+					/*else
 					{
 						name = Files.readAllLines(Paths.get("fileTwo.txt")).get(0);
 						line2 = Files.readAllLines(Paths.get("fileTwo.txt")).get(1);
 						floor = Files.readAllLines(Paths.get("fileTwo.txt")).get(2);
 						health = Integer.parseInt(line2);
 					}
-			
+			*/
 				} // ends try
 				catch(Exception e)
 				{ // starts catch
@@ -96,13 +96,15 @@ public class MyFavProgThatILove
 					{
 						System.out.println("Good");
 					}
-					else
-					{
-						name = Files.readAllLines(Paths.get("fileThree.txt")).get(0);
+					//else
+					//{
+						/* 
+						 * name = Files.readAllLines(Paths.get("fileThree.txt")).get(0);
 						line2 = Files.readAllLines(Paths.get("fileThree.txt")).get(1);
 						floor = Files.readAllLines(Paths.get("fileThree.txt")).get(2);
 						health = Integer.parseInt(line2);
-					}
+						*/
+					//}
 			
 				} // ends try
 				catch(Exception e)
