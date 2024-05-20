@@ -75,53 +75,29 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			tile[i].image = ImageIO.read(new File("Gray_Floor.png"));
 			}
 			//tile[1].collison = true;
-
-			
+			//outline stuff
+			tile[0].image = ImageIO.read(new File("Floorboard.png"));
+			tile[1].image = ImageIO.read(new File("Gray_Floor.png"));
 			tile[2].image = ImageIO.read(new File("Wall.png"));
-	
 			tile[3].image = ImageIO.read(new File("stairs.png"));
-			
-			//tile[4] = new Tile();
-			//tile[4].image = ImageIO.read(new File("Improved_stairs.png"));
-			
-		
-			tile[5].image = ImageIO.read(new File("Window.png"));
-			
-			
-			tile[6].image = ImageIO.read(new File("Door.png"));
+			tile[4].image = ImageIO.read(new File("Window.png"));	
+			tile[5].image = ImageIO.read(new File("Door.png"));
 			//furniture
-			
-			tile[10].image = ImageIO.read(new File("Chair.png"));
-
-		
-			tile[11].image = ImageIO.read(new File("table.png"));
-
-			
-			tile[12].image = ImageIO.read(new File("cabinet.png"));
-
-			
-			tile[13].image = ImageIO.read(new File("chest.png"));
-
-			tile[15].image = ImageIO.read(new File("Closed_scroll.png"));
-			/*
+			tile[6].image = ImageIO.read(new File("Chair.png"));
+			tile[7].image = ImageIO.read(new File("table.png"));
+			tile[8].image = ImageIO.read(new File("cabinet.png"));
+			tile[9].image = ImageIO.read(new File("chest.png"));
+			tile[10].image = ImageIO.read(new File("Pile_of_clothes.png"));
+			tile[11].image = ImageIO.read(new File("Closed_scroll.png"));
 			// monsters
-
-			tile[20].image = ImageIO.read(new File("Zombie.png"));
-
-
-			tile[21].image = ImageIO.read(new File("Skeleton.png"));
-
-			tile[22].image = ImageIO.read(new File("Witch.png"));
-
-			tile[23].image = ImageIO.read(new File("Pixies.png"));
-
-			tile[24].image = ImageIO.read(new File("Soul_Orb.png"));
+			tile[12].image = ImageIO.read(new File("Zombie.png"));
+			tile[13].image = ImageIO.read(new File("Skeleton.png"));
+			tile[14].image = ImageIO.read(new File("Witch.png"));
+			tile[15].image = ImageIO.read(new File("Pixies.png"));
+			tile[16].image = ImageIO.read(new File("Soul_Orb.png"));
 			//weapons
-
-			tile[30].image = ImageIO.read(new File("woodAxe.png"));
-	
-			tile[31].image = ImageIO.read(new File("IronSword.png"));
-			*/
+			tile[17].image = ImageIO.read(new File("woodAxe.png"));
+			tile[18].image = ImageIO.read(new File("IronSword.png"));
 		}
 		catch(Exception e)
 		{
