@@ -1,9 +1,15 @@
 import java.io.*; 
 import java.util.*; // imports scanner class
-
+/**
+* replaces axe or sword
+*
+* @author Tate Sommer
+* @version 1.0
+* @since 4/22/2024
+*/ 
 public class replace
 { // starts 
-	public replaceWeapons(weaponnum)
+	public replaceWeapons(int weaponnum)
 	{ // starts replaceWeapons
 		try
 		{ // Starts try
