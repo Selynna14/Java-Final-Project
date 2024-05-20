@@ -29,7 +29,7 @@ public class replace
 					{ // Starts for
 						
 						String word = currLine[j];
-						if(word.equals("weaponnum")) // Looks for the word God and changes it to Bob
+						if(word.equals("weaponnum")) // Looks weapon number and replaces it with 0
 						{ // Start if
 							System.out.print("0 ");
 						} // Ends if
@@ -50,4 +50,21 @@ public class replace
 			System.out.println("Error!");
 		} // end catch
 	} // ends replaceWeapons
+
+	public replaceMonster(int currlevel, int monsternum)
+	{ // starts replaceMonster
+		if (currlevel == 1)
+		{
+		}
+		else if (currlevel == 2)
+		{
+		}
+		else if (currlevel == 3)
+		{
+		}
+		else if (currlevel == 4)
+		{
+		}
+		
+	} // ends replaceMonster
 } // ends
