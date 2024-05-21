@@ -14,6 +14,22 @@ import java.nio.file.Paths;
 
 public class MyFavProgThatILove
 {	
+	static int tileNum = 0;
+	static int playerLoc;
+	static int currLevel = 0;
+	static boolean passedFloor;
+	static boolean respawn = false;
+	static boolean combat = false;
+	static boolean winGame = false;
+	static Random randObject = new Random();
+	static String[] WeponList = {"Hand"};
+	//static ArrayList < String[] > WeponList = new ArrayList < String[] >();
+	static ArrayList < String[] > inventory = new ArrayList < String[] > ();
+	
+	static JFrame frame = new JFrame();
+	
+	static GamePanel panel = new GamePanel();
+	
 	public static void main (String [] args)
 	{
 		JFrame frame = new JFrame();
@@ -121,6 +137,35 @@ public class MyFavProgThatILove
 			frame.setVisible(false); //you can't see me!
 			frame.dispose(); //Destroy the JFrame object
 		}
+		while (winGame == false)
+		{
+			switch(currLevel)
+			{
+				case 0:
+					groundFloor();
+					break;
+				case 1:
+					firstFloor();
+					break;
+				case 2:
+					secondFloor();
+					break;
+				case 3:
+					thirdFloor();
+					break;
+				default:
+			}
+		}
+		
+		if (winGame == true)
+		{
+			JOptionPane.showMessageDialog(null, "YOU WON THE GAME");
+			panel.h.interrupt(); //here i need to destroy the thread
+			frame.setVisible(false); //visibility to off
+			System.exit(0);
+			break;
+
+		}
 		
 		/*int dialogButton = JOptionPane.YES_NO_OPTION;
         dialogButton = JOptionPane.showConfirmDialog (null, "DO You want to proceed?","WAING", dialogButton);
@@ -135,57 +180,10 @@ public class MyFavProgThatILove
 			panel.startGameThread();//starting game thread
 		}*/
 	}
-	static int tileNum = 0;
-	static int playerLoc;
-	static int currLevel = 0;
-	static boolean passedFloor;
-	static boolean respawn = false;
-	static Random randObject = new Random();
-	static String[] WeponList = {"Hand"};
-	//static ArrayList < String[] > WeponList = new ArrayList < String[] >();
-	static ArrayList < String[] > inventory = new ArrayList < String[] > ();
-
-	
+		
 	static GamePanel panel = new GamePanel();
 	
-	public static void main (String [] args)
-	{
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setVisible(true);
-		frame.setTitle("Haunted Haven");
-		
-		frame.addKeyListener(panel);
-		
-		frame.add(panel);
-		frame.pack();
-
-		panel.startGameThread();//starting game thread	
-		
-		groundFloor();
-		firstFloor();
-	
-				/*case 0:
-					groundFloor();
-					break;
-				case 1:
-					firstFloor();
-					break;
-				case 2:
-					secondFloor();
-					break;
-				case 3:
-					thirdFloor();
-					break;
-				case 4:
-					fourthFloor();
-					break;*/
-
-
-	}
-	
-	public static void stopMovement()
+		public static void stopMovement()
 	{
 		panel.p.rightPressed = false;
 		panel.p.downPressed = false;
@@ -270,27 +268,14 @@ public class MyFavProgThatILove
 		{
 			playerLoc = findPlayerTileLocation();
 			 System.out.println(playerLoc);		
-			
+			 			
 			if (playerLoc == 6)
 			{
 				stopMovement();	
 				panel.worldY -= panel.tileSize;
 				JOptionPane.showMessageDialog(null, " You thought you can escape by going through the door? The door is locked! ");
 			}
-			
-			/*if (playerLoc == 9)
-			{
-				
-				panel.worldY -= panel.tileSize;
-				panel.worldX -= panel.tileSize;
-				panel.p.rightPressed = false;
-				panel.p.downPressed = false;
-				panel.p.upPressed = false;
-				panel.p.leftPressed = false;
-				JOptionPane.showMessageDialog(null, " A seemingly normal pile of clothes; (I would still watch out for them though)");
-				
-			}*/
-			
+					
 			if (playerLoc == 10 || playerLoc == 11)
 			{
 				
@@ -387,6 +372,11 @@ public class MyFavProgThatILove
 						else if (dialogButton == JOptionPane.NO_OPTION) 
 						{
 							JOptionPane.showMessageDialog(null, "GAME OVER");
+							panel.h.interrupt(); //here i need to destroy the thread
+							frame.setVisible(false); //visibility to off
+							System.exit(0);
+							break;
+							
 						}
 					}
 					else 
@@ -418,11 +408,10 @@ public class MyFavProgThatILove
 				stopMovement();
 				String answer;
 				JOptionPane.showMessageDialog(null, "You have to answer a riddle to move on");
-				JOptionPane.showMessageDialog(null, "This place has hardly any lights, but a lot of creaking floors. There are all kinds of strange noises and some random slamming doors. What is it?
-");
-				answer = JOptionPane.showInputDialog(null, "Input your answer: ");
+				JOptionPane.showMessageDialog(null, "idk what the riddle is lmao");
+				answer = JOptionPane.showInputDialog(null, "Input ur answer lmao");
 				
-				if (answer.equalsIgnoreCase("haunted house"))
+				if (answer.equalsIgnoreCase("wtv"))
 				{
 					JOptionPane.showMessageDialog(null,"you can move on");
 					answeredRiddle = true;
@@ -440,7 +429,7 @@ public class MyFavProgThatILove
 				panel.worldY -= 20;
 			}
 				
-			if (playerLoc == 3 && answeredRiddle == true && comlpetedLeveltoAnswerRiddle < 2)//stairs
+			if (playerLoc == 3 && answeredRiddle == true && comlpetedLeveltoAnswerRiddle >= 2)//stairs
 			{
 				int dialogButton = JOptionPane.YES_NO_OPTION;
 				stopMovement();
@@ -449,16 +438,17 @@ public class MyFavProgThatILove
 				if(dialogButton == JOptionPane.NO_OPTION) 
 				{
 					stopMovement();
-					panel.worldY -= panel.tileSize;
+					panel.worldY += panel.tileSize;
 				}
 				else if (dialogButton == JOptionPane.YES_OPTION) 
 				{
 					currLevel = 2;
-					
+					panel.worldX = 640;
+					panel.worldY = 1024;
 					passedFloor = true;
 				}
 			}
-			else if (playerLoc == 3 && (answeredRiddle == false || comlpetedLeveltoAnswerRiddle > 2 ))//stairs without completing level
+			else if (playerLoc == 3 && (answeredRiddle == false || comlpetedLeveltoAnswerRiddle < 2 ))//stairs without completing level
 			{
 				stopMovement();
 				JOptionPane.showMessageDialog(null, "You cant go up yet");
@@ -473,6 +463,7 @@ public class MyFavProgThatILove
 				panel.worldY += 40;
 				panel.worldY += 20;
 				interactedWithChest = true;
+				comlpetedLeveltoAnswerRiddle++;
 				hasKey = true;
 			}
 			else if  (playerLoc == 13 && interactedWithChest == true)
@@ -505,11 +496,12 @@ public class MyFavProgThatILove
 			{
 				 // = false;	
 			}	
-			
+	
 			if (playerLoc == 30)
 			{
 				stopMovement();
 				JOptionPane.showMessageDialog(null, "You found an axe, adding this to inventory");
+				comlpetedLeveltoAnswerRiddle++;
 				panel.worldX -= 20;
 				//add axe to inventory
 			//	WeponList.add("Axe");
@@ -517,41 +509,42 @@ public class MyFavProgThatILove
 				removeIcon(30);
 			}	
 			
-		}
-		/*if (combat = true)
-		{
-			if (player encountered zombie)
+			if (playerLoc == 20)
 			{
-			JOptionPane.ShowMesageDialog(null," There’s a zombie!" );
-			} 
-			JOptionPane.ShowMesageDialog(null," You are in combat! Don’t die!");
-			Call combat class.
+			combat = true;
+			}
+			if (combat == true)
+			{
+				if (playerLoc == 20)
+				{
+					JOptionPane.showMessageDialog(null," There’s a zombie!" );
+				} 
+					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+				//combat();
+			}
+
 		}
-		if (player encountered scroll)
-		{
-		JOptionPane.ShowMesageDialog(null, "You have found a scroll. On the scroll, there is a riddle on it. Answer it correctly to move on to the next floor.");
-		}
-		if (player collides with chest)
-		{
-		JOptionPane.ShowMesageDialog(null, "You have encountered a chest! What are you going to do with it? ");
-		}
-		*/
 	}
 	
 	public static void secondFloor()
-	{
-		 // = true;	
-		panel.tile[3].collison = true;	
-		
+	{	
+		boolean answeredRiddle = false;
 		passedFloor = false;
 		
 		while(panel.gameRuns = true && passedFloor == false)
 		{
-			if (playerLoc == 3)
+			if (currLevel == 2)//making sure the player cant go down
+			{
+				if (panel.worldY >= 1288)
 				{
+					panel.worldY -= 20;
+				}
+			}
+			if (playerLoc == 3 && answeredRiddle == true)//stairs
+			{
 					int dialogButton = JOptionPane.YES_NO_OPTION;
 					stopMovement();
-					dialogButton = JOptionPane.showConfirmDialog (null, "Do You want to proceed, you cant go back?","u might not expect smth, be ready", dialogButton);
+					dialogButton = JOptionPane.showConfirmDialog (null, "Do You want to proceed, you cant go back?","Last Level, yayyy", dialogButton);
 					
 					if(dialogButton == JOptionPane.NO_OPTION) 
 					{
@@ -560,30 +553,94 @@ public class MyFavProgThatILove
 					}
 					else if (dialogButton == JOptionPane.YES_OPTION) 
 					{
-			
-						currLevel = 2;
+						currLevel = 3;
 						passedFloor = true;
 					}
 			}	
-		}
-		/*if (combat = true)
-		{
-			if (player encountered zombie)
+			else if (playerLoc == 3 && answeredRiddle == false)
 			{
-			JOptionPane.ShowMesageDialog(null," There’s a zombie!" );
-			} 
-			JOptionPane.ShowMesageDialog(null," You are in combat! Don’t die!");
-			Call combat class.
+				stopMovement();
+				JOptionPane.showMessageDialog(null, "Answer the riddle before you move on");
+
+			}
+			if (playerLoc == 5)//window
+			{
+				
+				if(panel.jPressed == true)
+				{
+					stopMovement();
+					int yesno = JOptionPane.YES_NO_OPTION;
+					yesno = JOptionPane.showConfirmDialog (null, "Would you like to jump?","JUMP", yesno);
+					
+					if(yesno == JOptionPane.YES_OPTION) 
+					{
+						JOptionPane.showMessageDialog(null, "You died");
+						int dialogButton = JOptionPane.YES_NO_OPTION;
+						dialogButton = JOptionPane.showConfirmDialog (null, "Would you like to respawn?","Respawn", dialogButton);
+						
+						if(dialogButton == JOptionPane.YES_OPTION) 
+						{
+							panel.worldX = 642;
+							panel.worldY = 1728;
+							currLevel = 1;
+						}
+						else if (dialogButton == JOptionPane.NO_OPTION) 
+						{
+							JOptionPane.showMessageDialog(null, "GAME OVER");
+							panel.h.interrupt(); //here i need to destroy the thread
+							frame.setVisible(false); //visibility to off
+							System.exit(0);
+							break;
+						}
+					}
+					else 
+					{
+						panel.worldX -= panel.p.speed*4;
+					}
+				}
+			}
+			if  (playerLoc == 13)//chest with hint
+			{
+				stopMovement();
+				JOptionPane.showMessageDialog(null, "Hint hint");
+				panel.worldY += 40;
+				panel.worldX += 20;
+			}
+			
+			if (playerLoc == 20 || playerLoc == 22)//fighting in level 2
+			{
+				combat = true;
+			}
+			
+			if (combat == true)//fighitng section
+			{
+				if (playerLoc == 22)
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null," There’s a witch!" );
+				} 
+					stopMovement();
+					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+					//combat();
+					
+				if (combat == false)
+				{
+					removeIcon(22);
+					stopMovement();
+					JOptionPane.showMessageDialog(null,"The witches dropped 3 potions, I'll add them to your inventory ");
+				}
+				
+				if (playerLoc == 20)
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null," There’s a zombie!" );
+				} 
+					stopMovement();
+					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+					//combat();
+			}
+			
 		}
-		if (player encountered scroll)
-		{
-		JOptionPane.ShowMesageDialog(null, "You have found a scroll. On the scroll, there is a riddle on it. Answer it correctly to move on to the next floor.");
-		}
-		if (player collides with chest)
-		{
-		JOptionPane.ShowMesageDialog(null, "You have encountered a chest! What are you going to do with it? ");
-		}
-		*/
 	}
 	
 	public static void thirdFloor()
@@ -591,48 +648,30 @@ public class MyFavProgThatILove
 		 // = true;	
 		panel.tile[3].collison = true;	
 		
+		int levCompleted = 0;
 		passedFloor = false;
+		
 		
 		while(panel.gameRuns = true && passedFloor == false)
 		{
-			if (playerLoc == 3)
-				{
-					int dialogButton = JOptionPane.YES_NO_OPTION;
-					stopMovement();
-					dialogButton = JOptionPane.showConfirmDialog (null, "Do You want to proceed, you cant go back?","u might not expect smth, be ready", dialogButton);
+			if (levCompleted <= 3)
+			{
+				stopMovement();
+				winGame = true;
+				JOptionPane.showMessageDialog(null, "Answer the riddle before you move on");
+
 					
-					if(dialogButton == JOptionPane.NO_OPTION) 
-					{
-						stopMovement();
-						panel.worldY -= panel.tileSize;
-					}
-					else if (dialogButton == JOptionPane.YES_OPTION) 
-					{
+			}
 			
-						currLevel = 2;
-						passedFloor = true;
-					}
+			if (currLevel == 2)//making sure the player cant go down
+			{
+				if (panel.worldY >= 584)
+				{
+					panel.worldY -= 20;
+				}
 			}
 		}	
-		/*if 
-		 * (combat = true)
-		{
-			if (player encountered zombie)
-			{
-			JOptionPane.ShowMesageDialog(null," There’s a zombie!" );
-			} 
-			JOptionPane.ShowMesageDialog(null," You are in combat! Don’t die!");
-			Call combat class.
-		}
-		if (player encountered scroll)
-		{
-		JOptionPane.ShowMesageDialog(null, "You have found a scroll. On the scroll, there is a riddle on it. Answer it correctly to move on to the next floor.");
-		}
-		if (player collides with chest)
-		{
-		JOptionPane.ShowMesageDialog(null, "You have encountered a chest! What are you going to do with it? ");
-		}
-		*/
+		
 	}
 	
 	public static void fourthFloor()
@@ -809,4 +848,6 @@ public class MyFavProgThatILove
 					} 
 		}
 	}*/
+}
+
 }
