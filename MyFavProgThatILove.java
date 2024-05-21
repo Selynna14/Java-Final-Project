@@ -418,10 +418,11 @@ public class MyFavProgThatILove
 				stopMovement();
 				String answer;
 				JOptionPane.showMessageDialog(null, "You have to answer a riddle to move on");
-				JOptionPane.showMessageDialog(null, "idk what the riddle is lmao");
-				answer = JOptionPane.showInputDialog(null, "Input ur answer lmao");
+				JOptionPane.showMessageDialog(null, "This place has hardly any lights, but a lot of creaking floors. There are all kinds of strange noises and some random slamming doors. What is it?
+");
+				answer = JOptionPane.showInputDialog(null, "Input your answer: ");
 				
-				if (answer.equalsIgnoreCase("wtv"))
+				if (answer.equalsIgnoreCase("haunted house"))
 				{
 					JOptionPane.showMessageDialog(null,"you can move on");
 					answeredRiddle = true;
