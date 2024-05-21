@@ -408,17 +408,17 @@ public class MyFavProgThatILove
 				stopMovement();
 				String answer;
 				JOptionPane.showMessageDialog(null, "You have to answer a riddle to move on");
-				JOptionPane.showMessageDialog(null, "idk what the riddle is lmao");
-				answer = JOptionPane.showInputDialog(null, "Input ur answer lmao");
+				JOptionPane.showMessageDialog(null, "This place has hardly any lights, but a lot of creaking floors. There are all kinds of strange noises and some random slamming doors. What is it?");
+				answer = JOptionPane.showInputDialog(null, "Input your answer:");
 				
-				if (answer.equalsIgnoreCase("wtv"))
+				if (answer.equalsIgnoreCase("haunted house"))
 				{
-					JOptionPane.showMessageDialog(null,"you can move on");
+					JOptionPane.showMessageDialog(null,"You can move on");
 					answeredRiddle = true;
 				}
 				else 
 				{
-					JOptionPane.showMessageDialog(null,"you answered the riddle wrong, try again");	
+					JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
 				}
 			}
 			
@@ -540,6 +540,34 @@ public class MyFavProgThatILove
 					panel.worldY -= 20;
 				}
 			}
+			if (playerLoc == 15 && answeredRiddle == false)//scroll
+			{
+				stopMovement();
+				String answer;
+				JOptionPane.showMessageDialog(null, "You have to answer a riddle to move on");
+				JOptionPane.showMessageDialog(null, "People are scared of me. When you have more of me, you will see less. What am I?");
+?
+");
+				answer = JOptionPane.showInputDialog(null, "Input your answer:");
+				
+				if (answer.equalsIgnoreCase("darkness"))
+				{
+					JOptionPane.showMessageDialog(null,"You can move on");
+					answeredRiddle = true;
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
+				}
+			}
+			
+			if (playerLoc == 15 && answeredRiddle == true)
+			{
+				stopMovement();
+				JOptionPane.showMessageDialog(null,"Just go to the next floor, :)");	
+				panel.worldY -= 20;
+			}
+				
 			if (playerLoc == 3 && answeredRiddle == true)//stairs
 			{
 					int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -658,7 +686,7 @@ public class MyFavProgThatILove
 			{
 				stopMovement();
 				winGame = true;
-				JOptionPane.showMessageDialog(null, "Answer the riddle before you move on");
+				JOptionPane.showMessageDialog(null, "Answer the cipher before you move on");
 
 					
 			}
@@ -669,6 +697,31 @@ public class MyFavProgThatILove
 				{
 					panel.worldY -= 20;
 				}
+			}
+			if (playerLoc == 15 && answeredRiddle == false)//scroll
+			{
+				stopMovement();
+				String answer;
+				JOptionPane.showMessageDialog(null, "You have to answer a cipher to move on");
+				JOptionPane.showMessageDialog(null, "ZCUYPC-MD-RFC-FMSQC - Hint: y=a.");
+				answer = JOptionPane.showInputDialog(null, "ZCUYPC-MD-RFC-FMSQC - Input your answer:");
+				
+				if (answer.equalsIgnoreCase("beware of the house"))
+				{
+					JOptionPane.showMessageDialog(null,"You can move on");
+					answeredRiddle = true;
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
+				}
+			}
+			
+			if (playerLoc == 15 && answeredRiddle == true)
+			{
+				stopMovement();
+				JOptionPane.showMessageDialog(null,"Just go to the next floor, :)");	
+				panel.worldY -= 20;
 			}
 		}	
 		
