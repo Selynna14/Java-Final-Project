@@ -51,20 +51,8 @@ public class replace
 		} // end catch
 	} // ends replaceWeapons
 
-	public replaceMonster(int currlevel, int monsternum)
+	public replaceMonster(int row, int collum)
 	{ // starts replaceMonster
-		if (currlevel == 1)
-		{
-		}
-		else if (currlevel == 2)
-		{
-		}
-		else if (currlevel == 3)
-		{
-		}
-		else if (currlevel == 4)
-		{
-		}
-		
+		panel.mapTileNum[collum][row] = 0; // sets defeated monster tile to 0
 	} // ends replaceMonster
 } // ends
