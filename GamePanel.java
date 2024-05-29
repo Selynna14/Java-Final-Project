@@ -18,7 +18,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	/**
 	 *Instance Variables 
 	 */
-	 
 	final int originalTileSize = 16;
 	final int scale = 4;
 	
@@ -35,19 +34,22 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	
 	Tile[] tile;
 	int mapTileNum[][];
-	//MapBackground mp = new MapBackground(this);
-	Thota_Player p = new Thota_Player(this);
+	Player p = new Player(this);
 	
-	String currLevel = "0";
+	public boolean gameRuns = true;
+	static int keyPress;
+	static boolean jPressed =  false;
 	
 	//world vars
 	public int worldX, worldY;
 	public final int maxWorldCol = 64;
-	public final int maxWorldRow = 67;
+	public final int maxWorldRow = 56;
 	public final int worldWidth = tileSize  * maxWorldCol;
 	public final int worldHeight = tileSize * maxWorldRow;
 	
-	
+	/**
+	 * This method turns all the movement booleans to false to stop the charcter from moving 
+	 */ 
 	GamePanel()
 	{
 		this.setPreferredSize(new Dimension (screenWidth, screenHeight));
@@ -57,96 +59,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		this.setDoubleBuffered(true);
 		this.addKeyListener(this);
 		this.setFocusable(true);
-		
-		tile = new Tile[32];
+	
+		tile = new Tile[40];
 		mapTileNum = new int [maxWorldCol][maxWorldRow];
-		
 	}
 	
-	public void getTileImage()
-	{
-		try
-		{
-			//tile[0] = new Tile();
-			//tile[0].image = ImageIO.read(new File("Floorboard.png"));
-			for (int i = 0; i<tile.length; i++)
-			{
-			tile[i] = new Tile();
-			tile[i].image = ImageIO.read(new File("Gray_Floor.png"));
-			}
-			//tile[1].collison = true;
-			//outline stuff
-			tile[0].image = ImageIO.read(new File("Floorboard.png"));
-			tile[1].image = ImageIO.read(new File("Gray_Floor.png"));
-			tile[2].image = ImageIO.read(new File("Wall.png"));
-			tile[3].image = ImageIO.read(new File("stairs.png"));
-			tile[4].image = ImageIO.read(new File("Window.png"));	
-			tile[5].image = ImageIO.read(new File("Door.png"));
-			//furniture
-			tile[6].image = ImageIO.read(new File("Chair.png"));
-			tile[7].image = ImageIO.read(new File("table.png"));
-			tile[8].image = ImageIO.read(new File("cabinet.png"));
-			tile[9].image = ImageIO.read(new File("chest.png"));
-			tile[10].image = ImageIO.read(new File("Pile_of_clothes.png"));
-			tile[11].image = ImageIO.read(new File("Closed_scroll.png"));
-			// monsters
-			tile[12].image = ImageIO.read(new File("Zombie.png"));
-			tile[13].image = ImageIO.read(new File("Skeleton.png"));
-			tile[14].image = ImageIO.read(new File("Witch.png"));
-			tile[15].image = ImageIO.read(new File("Pixies.png"));
-			tile[16].image = ImageIO.read(new File("Soul_Orb.png"));
-			//weapons
-			tile[17].image = ImageIO.read(new File("woodAxe.png"));
-			tile[18].image = ImageIO.read(new File("IronSword.png"));
-		}
-		catch(Exception e)
-		{
-			System.out.println(e + " getTile ");
-		}
-	}
-	
-	public void loadMap(String map)
-	{
-		
-		try 
-		{
-				
-				File file = new File(map);
-				Scanner br = new Scanner(file);
-				
-				int col = 0;
-				int row = 0;
-				
-				while (col <  maxWorldCol && row <  maxWorldRow)
-				{
-					String line = br.nextLine();
-					
-					while(col <  maxWorldCol)
-					{
-						String numbers[] = line.split(" ");
-						
-						int num = Integer.parseInt(numbers[col]);
-						
-						mapTileNum[col][row] = num;
-						
-						col++;
-					}
-					
-					if (col ==  maxWorldCol)
-					{
-						col = 0;
-						row++;
-					}
-					//br.close();
-				}
-		
-		}
-		catch (Exception e)
-		{
-			System.out.println(e + "d");
-		}
-	}
-	
+	/**
+	 * This method draws the map based on the array values after the load map method is called	 
+	 * @param g is the graphics object needed for the program to draw an obejct in the jpanel
+	 */ 
 	public void drawMap(Graphics2D g)
 	{
 		try
@@ -188,18 +109,23 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		}
 		catch(Exception e)
 		{
-			System.out.println(e + " **DRAW MAP ERROR**jfdkljf");
+			System.out.println(e + "jfdkljf");
 		}
-	
-		
+
 	}	
     
+    /**
+	 * This method starts the game thread and the game
+	 */ 
     public void startGameThread()
     {
 		h = new Thread(this);
 		h.start();
 	}
-    	
+    
+    /**
+	 * This method controls the game thread and also repaints the game screen and updates each time the game thread runs
+	 */ 	
     public void run()
 	{
 		double drawInterval = 1000000000/FPS;
@@ -207,10 +133,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		
 		while (h != null)
 		{
-			
 			p.update();
 			repaint();
-			
+			Thread.State state = h.getState();
+			while(state.equals("RUNNABLE"))
+			{
+				 gameRuns = true;
+			}
+		
 			try
 			{
 				double remainingTime = nextDrawTime - System.nanoTime();
@@ -229,11 +159,17 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		}
 	}
 
+	/**
+	 * This method updates the player's x and y locations
+	 */ 
 	public void update()
 	{
 		p.update();
 	}
 	
+	/**
+	 * This method paints the screen and the player
+	 */ 
 	public void paintComponent(Graphics g) 
 	{
 		super.paintComponent(g);
@@ -243,13 +179,132 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		
 		p.draw(g2D);
 		
+		
+		
 		g.dispose();
     }
-  
+	
+	/**
+	 * This method intializes the tile[] array to allow the corresponding images in the map file to be drawn onto the panel
+	 */ 
+	public void getTileImage()
+	{
+		try
+		{
+			//tile[0] = new Tile();
+			//tile[0].image = ImageIO.read(new File("Floorboard.png"));
+			for (int i = 0; i<tile.length; i++)
+			{
+				tile[i] = new Tile();
+				tile[i].image = ImageIO.read(new File("Gray_Floor.png"));
+			}
+			
+			tile[2].collison = true;
+
+			
+			tile[2].image = ImageIO.read(new File("Wall.png"));
+	
+			tile[3].image = ImageIO.read(new File("stairs.png"));
+			
+			//tile[4] = new Tile();
+			//tile[4].image = ImageIO.read(new File("Improved_stairs.png"));
+			
+		
+			tile[5].image = ImageIO.read(new File("Window.png"));
+			
+			
+			tile[6].image = ImageIO.read(new File("Door.png"));
+			
+			//furniture
+			
+			tile[10].image = ImageIO.read(new File("Chair.png"));
+
+		
+			tile[11].image = ImageIO.read(new File("table.png"));
+
+			
+			tile[12].image = ImageIO.read(new File("cabinet.png"));
+
+			
+			tile[13].image = ImageIO.read(new File("chest.png"));
+
+			tile[15].image = ImageIO.read(new File("Closed_scroll.png"));
+			
+			// monsters
+
+			tile[20].image = ImageIO.read(new File("Zombie.png"));
+
+
+			tile[21].image = ImageIO.read(new File("Skeleton.png"));
+
+			tile[22].image = ImageIO.read(new File("Witch.png"));
+
+			//tile[23].image = ImageIO.read(new File("Pixies.png"));
+
+			//tile[24].image = ImageIO.read(new File("Soul_Orb.png"));
+			//weapons
+
+			tile[30].image = ImageIO.read(new File("woodAxe.png"));
+	
+			tile[31].image = ImageIO.read(new File("IronSword.png"));
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println(e + "jhskadhsk");
+		}
+	}
+	
+	/**
+	 * This method stores the numbers in the Map file in an array to use them later to draw the map
+	 * @param map is the map file from which the map is loaded
+	 */ 
+	public void loadMap(String map)
+	{
+		
+		try 
+		{
+				
+				File file = new File(map);
+				Scanner br = new Scanner(file);
+				
+				int col = 0;
+				int row = 0;
+				
+				while (col <  maxWorldCol && row <  maxWorldRow)
+				{
+					String line = br.nextLine();
+					
+					while(col <  maxWorldCol)
+					{						
+						String numbers[] = line.split(" ");
+						
+						int num = Integer.parseInt(numbers[col]);
+						
+						mapTileNum[col][row] = num;
+						
+						col++;
+					}
+					
+					if (col ==  maxWorldCol)
+					{
+						col = 0;
+						row++;
+					}
+					//br.close();
+				}
+		
+		}
+		catch (Exception e)
+		{
+			System.out.println(e + "d");
+		}
+	}
+	
 	//to move character
 	public void keyTyped(KeyEvent e)
 	{
-	   
+	   int code = e.getKeyCode();
 	}
 	
 	public void keyPressed(KeyEvent e) 
@@ -258,28 +313,30 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
         if (code == KeyEvent.VK_W)
         {
 			p.upPressed = true;
-			System.out.println("working w");
+	
 		}
 		else if (code == KeyEvent.VK_S)
 		{
 			p.downPressed = true;
-			System.out.println("working s");
+		
 		}
 		else if (code == KeyEvent.VK_A)
 		{
 			p.leftPressed = true;
-			System.out.println("working a");
+		
 		}
 		else if (code == KeyEvent.VK_D)
 		{
 			p.rightPressed = true;
-			System.out.println("working d");
 		}
 		else if (code == KeyEvent.VK_ESCAPE)
 		{
 			p.rightPressed = true;
 			System.out.println("working esc");
-			//SaveFile(name, health, floor);
+		}
+		else if (code == KeyEvent.VK_J)
+		{
+			jPressed = true;
 		}
 	}
 	
@@ -289,63 +346,24 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
         if (code == KeyEvent.VK_W)
         {
 			p.upPressed = false;
-			System.out.println("working l");
 		}
 		else if (code == KeyEvent.VK_S)
 		{
 			p.downPressed = false;
-			System.out.println("working l");
 		}
 		else if (code == KeyEvent.VK_A)
 		{
 			p.leftPressed = false;
-			System.out.println("working l");
 		}
 		else if (code == KeyEvent.VK_D)
 		{
 			p.rightPressed = false;
-			System.out.println("working l");
+		}
+		else if (code == KeyEvent.VK_J)
+		{
+			jPressed = false;
 		}
     }
 	
-	
-	public void checkCollision()
-	{
-		//predicting how to do collsions
-		int predictLeft = worldX + p.solidArea.x;
-		int predictRight = worldX + p.solidArea.x + p.solidArea.width;
-		int predictTop = worldY + p.solidArea.y;
-		int predictBottom = worldY + p.solidArea.y + p.solidArea.height;
-		
-		int leftCol = predictLeft/tileSize;
-		int rightCol = predictRight/tileSize;
-		int topCol = predictTop/tileSize;
-		int bottomCol = predictBottom/tileSize;
-		
-		//System.out.println(leftCol);
-		//System.out.println(rightCol);
-		//System.out.println(topCol);
-		//System.out.println(bottomCol);
-		
-		
-		int tileNum1, tileNum2;
-		
-		if (p.direction == "up")
-		{
-			//System.out.println("u");
-		}
-		else if (p.direction == "down")
-		{
-			//System.out.println("d");
-		}
-		else if (p.direction == "left")
-		{
-			//System.out.println("l");
-		}
-		else if (p.direction == "right")
-		{
-			//System.out.println("r");
-		}
-		
-	}
+	//the levels
 }
