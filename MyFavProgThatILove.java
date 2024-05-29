@@ -260,7 +260,7 @@ public class MyFavProgThatILove
 		}
 
 		JOptionPane.showMessageDialog(null, "Hello " + panel.p.name  +"! Finally, you woke up. You are stuck in this haunted house and i will be your assistant to escape this miserable place.");
-		JOptionPane.showMessageDialog(null, " Btw, press \"esc\" on your keyboard if you want to quit this game. I do not think that is a good idea, especially because we just started.");
+		JOptionPane.showMessageDialog(null, " Btw, press \"esc\" on your keyboard if you want to quit this game. That would be a bit silly, though, especially because we just started.");
 		JOptionPane.showMessageDialog(null, "  FYI, use wasd to move around. I suggest that you go up to the first floor. ");
 		JOptionPane.showMessageDialog(null, " Also you can jump out the window on each floor, but I do not know if that is a good idea. ");
 		
@@ -273,7 +273,7 @@ public class MyFavProgThatILove
 			{
 				stopMovement();	
 				panel.worldY -= panel.tileSize;
-				JOptionPane.showMessageDialog(null, " You thought you can escape by going through the door? The door is locked! ");
+				JOptionPane.showMessageDialog(null, " You thought you can escape by going through the door? You idiot! The door is obviously locked! ");
 			}
 					
 			if (playerLoc == 10 || playerLoc == 11)
@@ -419,6 +419,7 @@ public class MyFavProgThatILove
 				else 
 				{
 					JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
+					
 				}
 			}
 			
@@ -552,8 +553,18 @@ public class MyFavProgThatILove
 				
 				if (answer.equalsIgnoreCase("darkness"))
 				{
-					JOptionPane.showMessageDialog(null,"You can move on");
-					answeredRiddle = true;
+					JOptionPane.showMessageDialog(null,"One more!");
+					JOptionPane.showMessageDialog(null, "What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?");
+					answer = JOptionPane.showInputDialog(null, "Input your answer:");
+					if (answer.equalsIgnoreCase("r"))
+					{
+						JOptionPane.showMessageDialog(null,"You get to move on.");
+						answeredRiddle = true;
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
+					}
 				}
 				else 
 				{
