@@ -8,7 +8,7 @@ import java.io.*
     * date: 5/15/2024
 */ 
     
-Public SaveFile(String name, String health, String floor)
+Public SaveFile(String name, String lives, String floor)
 {
     String[] saveFile = {"1","2", "3"}; 
     String input = (String) JOptionPane.showInputDialog(null,"Which file do you want to save your game in? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
@@ -19,7 +19,7 @@ Public SaveFile(String name, String health, String floor)
             File fileOne = new File("fileOne.txt"); // loads file
             PrintWriter write = new PrintWriter(fileOne); // creates file writer 
             write.println(name); // writes important data into file
-            write.println(health);
+            write.println(lives);
             write.println(floor);
             write.println();
             write.close();
@@ -36,7 +36,7 @@ Public SaveFile(String name, String health, String floor)
             File fileTwo = new File("fileTwo.txt");
             PrintWriter write = new PrintWriter(fileTwo);
             write.println(name);
-            write.println(health);
+            write.println(lives);
             write.println(floor);
             write.println();
             write.close();
@@ -51,7 +51,7 @@ Public SaveFile(String name, String health, String floor)
             File fileOne = new File("fileOne.txt");
             PrintWriter write = new PrintWriter(fileOne);
             write.println(name);
-            write.println(health);             
+            write.println(lives);             
             write.println(floor);
             write.println();
             write.close();
