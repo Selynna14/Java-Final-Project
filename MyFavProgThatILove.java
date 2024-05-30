@@ -564,6 +564,7 @@ public class MyFavProgThatILove
 					else 
 					{
 						JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
+						// panel.worldY += 10;
 					}
 				}
 				else 
