@@ -1,27 +1,18 @@
 /**
-*add purpose of program
+*This is the tile class to create an class to store tiles(images) needed for the game
 *
-* @author Neysa Thota, Selynna Song, Tate Sommer, Sejal Sharma 
+* @author Neysa Thota
 * @version 1.0
-* @since 04/22/2024
+* @since 5/7/2024
 */ 
 
-import java.io.*;//needed to generate random values
-import java.util.*;//neede for scanner
-import java.awt.*;//needed for graphic 
-import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-
-/**
-*  
-*
-*/
+import java.awt.image.BufferedImage;//needed to make an image variable
 
 public class Tile
 {	
+	/**
+	 *Instance Variables 
+	 */	
 	public BufferedImage image;
 	public boolean collison = false;
 }
