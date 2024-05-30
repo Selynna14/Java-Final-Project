@@ -1,28 +1,26 @@
 /**
-*This program contains the main part of our program, like the code for each of the levels, and the code to create the panel
+* main program
 *
 * @author Neysa Thota
 * @version 1.0
 * date: 4/22/2024
 */ 
-
 import java.awt.*;//needed for graphic 
 import javax.swing.*;//needed for the JFrame
-import java.awt.event.*;//needed for keylistener and keyevent
-import java.io.*; //needed fore file reading
-import java.util.*; // imports scanner class
+import java.io.*; // imports needed for files
+import java.nio.file.Files; 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class MyFavProgThatILove
 {	
-	/**
-	 *Instance Variables 
-	 */
-	 
 	static int tileNum = 0;
 	static int playerLoc;
 	static int currLevel = 0;
 	static boolean passedFloor;
 	static boolean respawn = false;
+	static boolean combat = false;
 	static boolean winGame = false;
 	static Random randObject = new Random();
 	static String[] WeponList = {"Hand"};
@@ -32,28 +30,116 @@ public class MyFavProgThatILove
 	static JFrame frame = new JFrame();
 	
 	static GamePanel panel = new GamePanel();
-	static Monster monster = new Monster();
 	
-	
-	/**
-	 * The main method runs all the code for the levels and calls the methods for each level, this contains all the conditions to control if the player has won the game and which level should run
-	 */ 
 	public static void main (String [] args)
 	{
-		//JFrame frame = new JFrame();
+		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setTitle("Haunted Haven");
 		
-		frame.addKeyListener(panel);
+		GamePanel panel = new GamePanel();
 		
 		frame.add(panel);
 		frame.pack();
 
-		panel.startGameThread();//starting game thread	
+
+		panel.startGameThread();//starting game thread
+		int health;
+		String name,floor, lin2;
+		String[] yesNo = {"Yes","No"};
+		String input = (String) JOptionPane.showInputDialog(null,"Do you want to play? ", "", JOptionPane.QUESTION_MESSAGE, null, yesNo, yesNo[1]);
 		
-		
+		if (input.equals("Yes"))
+		{
+			panel.startGameThread();//starting game thread
+   			String[] loadFile = {"1","2", "3"};
+			String input2 = (String) JOptionPane.showInputDialog(null,"Which file do you want to play out of? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
+			if (input2.equals("1"))
+			{
+				try
+				{ // starts try
+					File fileOne = new File("fileOne.txt"); // Go find and load file
+					if (fileOne.createNewFile())
+					{
+						System.out.println("Good");
+					}
+					/*else
+					{
+						name = Files.readAllLines(Paths.get("fileOne.txt")).get(0);
+						line2 = Files.readAllLines(Paths.get("fileOne.txt")).get(1);
+						floor = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
+						health = Integer.parseInt(line2);
+					}
+			*/
+				} // ends try
+				catch(Exception e)
+				{ // starts catch
+					System.out.println("Error! " + e);
+				} // ends catch
+	
+			}
+			else if (input2.equals("2"))
+			{
+				try
+				{ // starts try
+					File fileTwo = new File("fileTwo.txt"); // Go find and load file
+					if (fileTwo.createNewFile())
+					{
+						System.out.println("Good");
+					}
+					/*else
+					{
+						name = Files.readAllLines(Paths.get("fileTwo.txt")).get(0);
+						line2 = Files.readAllLines(Paths.get("fileTwo.txt")).get(1);
+						floor = Files.readAllLines(Paths.get("fileTwo.txt")).get(2);
+						health = Integer.parseInt(line2);
+					}
+			*/
+				} // ends try
+				catch(Exception e)
+				{ // starts catch
+					System.out.println("Error! " + e);
+				} // ends catch
+
+			}
+			else if (input2.equals("3"))
+			{
+				try
+				{ // starts try
+					File fileThree = new File("fileThree.txt"); // Go find and load file
+					if (fileThree.createNewFile())
+					{
+						System.out.println("Good");
+					}
+					//else
+					//{
+						/* 
+						 * name = Files.readAllLines(Paths.get("fileThree.txt")).get(0);
+						line2 = Files.readAllLines(Paths.get("fileThree.txt")).get(1);
+						floor = Files.readAllLines(Paths.get("fileThree.txt")).get(2);
+						health = Integer.parseInt(line2);
+						*/
+					//}
+			
+				} // ends try
+				catch(Exception e)
+				{ // starts catch
+					System.out.println("Error! " + e);
+				} // ends catch
+
+			}
+			else
+				System.out.println("?");
+		}
+		else 
+		{
+			frame.setVisible(false); //you can't see me!
+			frame.dispose(); //Destroy the JFrame object
+			panel.h.interrupt(); //here i need to destroy the thread
+			System.exit(0);
+		}
 		while (winGame == false)
 		{
 			switch(currLevel)
@@ -82,12 +168,24 @@ public class MyFavProgThatILove
 			System.exit(0);
 
 		}
+		
+		/*int dialogButton = JOptionPane.YES_NO_OPTION;
+        dialogButton = JOptionPane.showConfirmDialog (null, "DO You want to proceed?","WAING", dialogButton);
+        if(dialogButton == JOptionPane.NO_OPTION) 
+        {
+			frame.setVisible(false);
+			frame.dispose(); //Destroys the JFrame object
+			System.exit(0);
+        }
+        else if (dialogButton == JOptionPane.YES_OPTION) 
+        {
+			panel.startGameThread();//starting game thread
+		}*/
 	}
+		
+
 	
-	/**
-	 * This method turns all the movement booleans to false to stop the charcter from moving 
-	 */ 
-	public static void stopMovement()
+		public static void stopMovement()
 	{
 		panel.p.rightPressed = false;
 		panel.p.downPressed = false;
@@ -95,9 +193,6 @@ public class MyFavProgThatILove
 		panel.p.leftPressed = false; 	
 	}
 	
-	/**
-	 * This method finds the player's location at any moment in the game and returns it to the code for the levels to see if a player is at a place where they interact with a 
-	 */ 
 	public static int findPlayerTileLocation()
 	{
 		//predicting the location
@@ -158,9 +253,6 @@ public class MyFavProgThatILove
 		return tileNum;
 	}
 	
-	/**
-	 * This method contains all the code for the ground floor, it first contians the instructions that should only appear once and then a loop that runs everytime the gameloop runs and until the conditions and the boolean for passing the floor = true
-	 */
 	public static void groundFloor()
 	{
 		
@@ -218,11 +310,9 @@ public class MyFavProgThatILove
 		}
 	}
 		
-	/**
-	 * This method contians the code for the first floor, and uses a loop to test the player's location until they complete everything in the level and move on to the next one
-	 */ 
 	public static void firstFloor()
 	{		
+		 // = true;	
 		
 		int comlpetedLeveltoAnswerRiddle = 0;
 		boolean introWindow = true;
@@ -232,7 +322,7 @@ public class MyFavProgThatILove
 	    boolean hasKey = false;
 		
 		passedFloor = false;
-		 
+		
 		JOptionPane.showMessageDialog(null, "You might find a key sowewhere in this room for the doors");
 		JOptionPane.showMessageDialog(null, "You might want to explore the rooms");
 		
@@ -241,7 +331,7 @@ public class MyFavProgThatILove
 			panel.tile[3].collison = true;	
 						
 			playerLoc = findPlayerTileLocation();
-			System.out.println(playerLoc + " First floor is running");		
+			 //(playerLoc);		
 
 			if (currLevel == 1)
 			{
@@ -325,12 +415,12 @@ public class MyFavProgThatILove
 				
 				if (answer.equalsIgnoreCase("haunted house"))
 				{
-					JOptionPane.showMessageDialog(null,"you can move on");
+					JOptionPane.showMessageDialog(null,"You can move on");
 					answeredRiddle = true;
 				}
 				else 
 				{
-					JOptionPane.showMessageDialog(null,"you answered the riddle wrong, try again");	
+					JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
 				}
 			}
 			
@@ -338,7 +428,7 @@ public class MyFavProgThatILove
 			{
 				stopMovement();
 				JOptionPane.showMessageDialog(null,"Just go to the next floor, :(");	
-				panel.worldY += 20;
+				panel.worldY -= 20;
 			}
 				
 			if (playerLoc == 3 && answeredRiddle == true && comlpetedLeveltoAnswerRiddle >= 2)//stairs
@@ -366,7 +456,7 @@ public class MyFavProgThatILove
 				JOptionPane.showMessageDialog(null, "You cant go up yet");
 				panel.worldY += panel.tileSize;
 			}
-					
+			
 			if (playerLoc == 13 && interactedWithChest == false)//chest
 			{
 				stopMovement();
@@ -390,7 +480,7 @@ public class MyFavProgThatILove
 			{
 				int dialogButton = JOptionPane.YES_NO_OPTION;
 				stopMovement();
-				dialogButton = JOptionPane.showConfirmDialog (null, "Do you want to use the key to open the door?","Oh no, You are stuck inside", dialogButton);
+				dialogButton = JOptionPane.showConfirmDialog (null, "Do You want to use the key to open the door?","Oh no, You are stuck inside", dialogButton);
 				
 				if(dialogButton == JOptionPane.NO_OPTION) 
 				{
@@ -423,29 +513,28 @@ public class MyFavProgThatILove
 			
 			if (playerLoc == 20)
 			{
-				stopMovement();
-				JOptionPane.showMessageDialog(null," There’s a zombie!" );
-				panel.worldX += 50;
-				panel.combat = true;
+			combat = true;
 			}
-			
+			if (combat == true)
+			{
+				if (playerLoc == 20)
+				{
+					JOptionPane.showMessageDialog(null," There’s a zombie!" );
+				} 
+					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+				//combat();
+			}
+
 		}
 	}
 	
-	/**
-	 * This method contians the code for the second floor, and uses a loop to test the player's location until they complete everything in the level and move on to the next one
-	 */ 
 	public static void secondFloor()
 	{	
 		boolean answeredRiddle = false;
 		passedFloor = false;
-		boolean potionsAddToInventory = false;
 		
 		while(panel.gameRuns = true && passedFloor == false)
 		{
-			playerLoc = findPlayerTileLocation();
-			System.out.println(playerLoc);
-			
 			if (currLevel == 2)//making sure the player cant go down
 			{
 				if (panel.worldY >= 1288)
@@ -453,6 +542,32 @@ public class MyFavProgThatILove
 					panel.worldY -= 20;
 				}
 			}
+			if (playerLoc == 15 && answeredRiddle == false)//scroll
+			{
+				stopMovement();
+				String answer;
+				JOptionPane.showMessageDialog(null, "You have to answer a riddle to move on");
+				JOptionPane.showMessageDialog(null, "People are scared of me. When you have more of me, you will see less. What am I?");
+				answer = JOptionPane.showInputDialog(null, "Input your answer:");
+				
+				if (answer.equalsIgnoreCase("darkness"))
+				{
+					JOptionPane.showMessageDialog(null,"You can move on");
+					answeredRiddle = true;
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
+				}
+			}
+			
+			if (playerLoc == 15 && answeredRiddle == true)
+			{
+				stopMovement();
+				JOptionPane.showMessageDialog(null,"Just go to the next floor, :)");	
+				panel.worldY -= 20;
+			}
+				
 			if (playerLoc == 3 && answeredRiddle == true)//stairs
 			{
 					int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -522,11 +637,10 @@ public class MyFavProgThatILove
 			
 			if (playerLoc == 20 || playerLoc == 22)//fighting in level 2
 			{
-				panel.worldY += 20;
-				panel.combat = true;
+				combat = true;
 			}
 			
-			if (panel.combat == true)//fighitng section
+			if (combat == true)//fighitng section
 			{
 				if (playerLoc == 22)
 				{
@@ -535,15 +649,13 @@ public class MyFavProgThatILove
 				} 
 					stopMovement();
 					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
-					panel.combat = false;
 					//combat();
 					
-				if (panel.combat == false && potionsAddToInventory ==  false)
+				if (combat == false)
 				{
 					removeIcon(22);
 					stopMovement();
 					JOptionPane.showMessageDialog(null,"The witches dropped 3 potions, I'll add them to your inventory ");
-					//add potions to inventory
 				}
 				
 				if (playerLoc == 20)
@@ -559,15 +671,13 @@ public class MyFavProgThatILove
 		}
 	}
 	
-	/**
-	 * This method contians the code for the third floor, and uses a loop to test the player's location until they complete everything in the level and move on to the next one
-	 */ 
 	public static void thirdFloor()
 	{
 		 // = true;	
 		panel.tile[3].collison = true;	
 		
 		int levCompleted = 0;
+		boolean answeredRiddle = false;
 		passedFloor = false;
 		
 		
@@ -577,7 +687,7 @@ public class MyFavProgThatILove
 			{
 				stopMovement();
 				winGame = true;
-				JOptionPane.showMessageDialog(null, "Answer the riddle before you move on");
+				JOptionPane.showMessageDialog(null, "Answer the cipher before you move on");
 
 					
 			}
@@ -589,14 +699,81 @@ public class MyFavProgThatILove
 					panel.worldY -= 20;
 				}
 			}
+			if (playerLoc == 15 && answeredRiddle == false)//scroll
+			{
+				stopMovement();
+				String answer;
+				JOptionPane.showMessageDialog(null, "You have to answer a cipher to move on");
+				JOptionPane.showMessageDialog(null, "ZCUYPC-MD-RFC-FMSQC - Hint: y=a.");
+				answer = JOptionPane.showInputDialog(null, "ZCUYPC-MD-RFC-FMSQC - Input your answer:");
+				
+				if (answer.equalsIgnoreCase("beware of the house"))
+				{
+					JOptionPane.showMessageDialog(null,"You can move on");
+					answeredRiddle = true;
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
+				}
+			}
+			
+			if (playerLoc == 15 && answeredRiddle == true)
+			{
+				stopMovement();
+				JOptionPane.showMessageDialog(null,"Just go to the next floor, :)");	
+				panel.worldY -= 20;
+			}
 		}	
 		
 	}
 	
-	/**
-	 * This method turns removes an image from the game by rewriting the map file, and changing which image should be drawn
-	 * @param weaponnum is the tile[] number correlating to the image we would like to replace
-	 */ 
+	public static void fourthFloor()
+	{
+		 // = true;	
+		panel.tile[3].collison = true;	
+		
+		passedFloor = false;
+		
+		while(panel.gameRuns = true && passedFloor == false)
+		if (playerLoc == 3)
+			{
+				int dialogButton = JOptionPane.YES_NO_OPTION;
+				stopMovement();
+				dialogButton = JOptionPane.showConfirmDialog (null, "Do You want to proceed, you cant go back?","You might not expect something, be ready", dialogButton);
+				
+				if(dialogButton == JOptionPane.NO_OPTION) 
+				{
+					stopMovement();
+					panel.worldY -= panel.tileSize;
+				}
+				else if (dialogButton == JOptionPane.YES_OPTION) 
+				{
+		
+					currLevel = 2;
+					passedFloor = true;
+				}
+		}	
+		/*if (combat = true)
+		{
+			if (player encountered zombie)
+			{
+			JOptionPane.ShowMesageDialog(null," There’s a zombie!" );
+			} 
+			JOptionPane.ShowMesageDialog(null," You are in combat! Don’t die!");
+			Call combat class.
+		}
+		if (player encountered scroll)
+		{
+		JOptionPane.ShowMesageDialog(null, "You have found a scroll. On the scroll, there is a riddle on it. Answer it correctly to move on to the next floor.");
+		}
+		if (player collides with chest)
+		{
+		JOptionPane.ShowMesageDialog(null, "You have encountered a chest! What are you going to do with it? ");
+		}
+		*/
+	}
+	
 	public static void removeIcon(int weaponnum)
 	{
 		try
@@ -644,91 +821,65 @@ public class MyFavProgThatILove
 			System.out.println("Error!" + e);
 		} // end catch
 	}
+}
 	
-	/**
-	 * This method turns all the movement booleans to false to stop the charcter from moving 
-	 * @param tileNum is the player's location showing which monster the player is fighting, so that the method can get the right values for the right monsters
-	 */ 
-	public static void combat(int tileNum)
+	/*public static void combat(int tileNum)
 	{
-		try
+		int MonsterHealth;
+		boolean combat = true; // creates flag variable
+		while(combat == true)
 		{
-			int MonsterHealth;
-			
-			while(panel.combat == true)
+			int Damge = 0; 
+			if (tileNum == 20) //need colitions
 			{
-				int Damge = 0; 
-				if (tileNum == 20) //zombie
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie();
-					zom[0] = new Zombie();
-					MonsterHealth = z.getMonsterHealth();
-					//z.drawMonster(pane);
+				Monster Zombie = new Zombie();//make a house!
+				MonsterHealth = Zombie.getMonsterHealth();
+				destroyMonster(MonsterHealth);
 				
-					destroyMonster(MonsterHealth);
-					
-					//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHH
-				}
-
-				if (tileNum == 21) //need colitions
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie();
-					zom[0] = new Zombie();
-					MonsterHealth = z.getMonsterHealth();	
-					destroyMonster(MonsterHealth);	
-
-				}
-				
-				if (tileNum == 22) //need colitions
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie();
-					zom[0] = new Zombie();
-					MonsterHealth = z.getMonsterHealth();		
-					//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHHH
-				}
-
-				if (tileNum == 23) //need colitions
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie();
-					zom[0] = new Zombie();
-					MonsterHealth = z.getMonsterHealth();		
-					destroyMonster(MonsterHealth);
-
-				}
-
-				if (tileNum == 24) //need colitions
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie();
-					zom[0] = new Zombie();
-					MonsterHealth = z.getMonsterHealth();		
-				}
-
-				panel.combat = false;
+				//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHH
 			}
-		}
-		catch(Exception e)
-		{
-			System.out.println("Error! in combat class: " + e);
-		}
 
+			if (tileNum == 21) //need colitions
+			{
+				Monster Skeletons = new Skeletons();//make a house!
+				MonsterHealth = Skeleton.getMonsterHealth();
+				//call destroy monster
+				destroyMonster(MonsterHealth);
+
+			}
+			
+			if (tileNum == 22) //need colitions
+			{
+				Monster Witch = new Witch();//make a house!
+				MonsterHealth = Witch.getMonsterHealth;
+			    //call destory monster
+				destroyMonster(MonsterHealth);
+				//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHHH
+			}
+
+			if (tileNum == 23) //need colitions
+			{
+				Monsters Pixies = new Pixies();//make a house!
+				MonsterHealth = Pixies.getMonsterHealth;
+				//call destory monster
+				destroyMonster(MonsterHealth);
+
+			}
+
+			if (tileNum == 24) //need colitions
+			{
+				Monster SoulOrb = new SoulOrb();//make a house!
+				MonsterHealth = SoulOrb.getMonsterHealth;
+				destroyMonster(MonsterHealth);
+			}
+
+			combat = false;
+		}
 	}
 	
-	/**
-	 * This method does returns the damage done to the monster each hit, depending on what the player used. 
-	 * @param MonsterHealth is the amount of health the monster has to decide how many times the player needs to hit to kill the monster. 
-	 */ 
-	public static int destroyMonster(int MonsterHealth)
+	public static void destroyMonster(int MonsterHealth, int Damage)
 	{
-		int Damage = 0;
-
-		try
-		{		
-		/*while (MonsterHealth > 0) // loops while the monster is alive
+		while (MonsterHealth > 0) // loops while the monster is alive
 		{
 					String input = (String) JOptionPane.showInputDialog(null,"How would you like to attack?", "", JOptionPane.QUESTION_MESSAGE, null, WeponList, WeponList[0]);
 					switch(input) 
@@ -750,16 +901,6 @@ public class MyFavProgThatILove
 							break;
 						default: // code block 
 					} 
-		}*/
-				
 		}
-		catch(Exception e)
-		{
-			System.out.println("Error! in dmamage class: " + e);
-		}
-		
-		return Damage;
-
-	}
-}
-
+	}*/
+	
