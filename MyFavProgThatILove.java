@@ -61,7 +61,18 @@ public class MyFavProgThatILove
 		panel.setFirstFloor();
 		
 		WeponList.add("Hand");
-
+		// code
+		String[] loadFile = {"1","2", "3"};
+		String input5 = (String) JOptionPane.showInputDialog(null,"Which file do you want to play out of? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
+		if (input2.equals("1"))
+		{
+			try
+			{ // starts try
+				File fileOne = new File("fileOne.txt"); // Go find and load file
+				if (fileOne.createNewFile())
+				{
+					System.out.println("Good");
+				}
 		
 		while (winGame == false)
 		{	
