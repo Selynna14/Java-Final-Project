@@ -3,17 +3,14 @@
 *
 * @author Neysa Thota
 * @version 1.0
-* @since 4/22/2024
+* date: 4/22/2024
 */ 
 
 import java.awt.*;//needed for graphic 
 import javax.swing.*;//needed for the JFrame
 import java.awt.event.*;//needed for keylistener and keyevent
-import java.io.*; //needed for file reading
+import java.io.*; //needed fore file reading
 import java.util.*; // imports scanner class
-import java.nio.file.Files; // needed for file reading
-import java.nio.file.Path; // needed for file reading
-import java.nio.file.Paths; // needed for file reading
 
 
 public class MyFavProgThatILove
@@ -65,18 +62,6 @@ public class MyFavProgThatILove
 		
 		WeponList.add("Hand");
 
-		// code
-		String[] loadFile = {"1","2", "3"};
-		String input5 = (String) JOptionPane.showInputDialog(null,"Which file do you want to play out of? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
-		if (input2.equals("1"))
-		{
-			try
-			{ // starts try
-				File fileOne = new File("fileOne.txt"); // Go find and load file
-				if (fileOne.createNewFile())
-				{
-					System.out.println("Good");
-				}
 		
 		while (winGame == false)
 		{	
@@ -448,7 +433,6 @@ public class MyFavProgThatILove
 						else if (dialogButton == JOptionPane.NO_OPTION) 
 						{
 							JOptionPane.showMessageDialog(null, "GAME OVER");
-							//SaveFile(name,lives, currFloor)
 							panel.h.interrupt(); //here i need to destroy the thread
 							frame.setVisible(false); //visibility to off
 							System.exit(0);
@@ -540,6 +524,7 @@ public class MyFavProgThatILove
 		boolean answeredRiddle = false;
 		passedFloor = false;
 		boolean potionsAddToInventory = false;
+		boolean interactedWithChest = false;
 		
 		while(panel.gameRuns = true && passedFloor == false)
 		{
@@ -553,6 +538,129 @@ public class MyFavProgThatILove
 					panel.worldY -= 20;
 				}
 			}*/
+			play = panel.findObjNum();
+			test = "";
+			
+			if (play != 10)
+			{
+					String item = panel.obj[play].name;
+					//System.out.println(item);
+			
+				test = "chest";
+				if (item.equalsIgnoreCase(test) && interactedWithChest == false)//chest
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null, "You have encountered a chest");
+					JOptionPane.showMessageDialog(null, "You found a hint for your riddle inside. - Dark____");
+					panel.worldY += 40;
+					panel.worldY += 20;
+					interactedWithChest = true;
+				}
+				else if  (item.equalsIgnoreCase(test) && interactedWithChest == true)
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null, "You might wanna use the hint to answer the riddle.");
+					switch(panel.p.direction)
+					{
+						case "up":
+							panel.worldY += 40;
+							break;
+						case "down":
+							panel.worldY -= 40;
+							break;
+						case "right":
+							panel.worldX -= 40;
+							break;
+						case "left":
+							panel.worldX += 40;
+							break;
+					}
+				
+				}
+				
+				test = "scroll";
+				if (item.equalsIgnoreCase(test) && answeredRiddle == false)//scroll
+				{
+					stopMovement();
+					String answer;
+					JOptionPane.showMessageDialog(null, "You have to answer a riddle to move on");
+					JOptionPane.showMessageDialog(null, "People are scared of me. When you have more of me, you will see less. What am I?");
+					answer = JOptionPane.showInputDialog(null, "Input your answer:");
+					
+					if (answer.equalsIgnoreCase("Darkness"))
+					{
+						JOptionPane.showMessageDialog(null,"You can move on");
+						answeredRiddle = true;
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null,"You answered the riddle wrong, try again");	
+					}
+				}
+				
+				if (item.equalsIgnoreCase(test) && answeredRiddle == true)
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null,"Go to the next floor, :(");	
+					panel.worldY += panel.tileSize;
+				}
+					
+				test = "zombie";
+				
+				if(item.equalsIgnoreCase(test))
+				{
+					stopMovement();
+					panel.combat = true;
+					stopMovement();
+					combat(test);
+					switch(panel.p.direction)
+					{
+						case "up":
+							panel.worldY += 40;
+							break;
+						case "down":
+							panel.worldY -= 40;
+							break;
+						case "right":
+							panel.worldX -= 40;
+							break;
+						case "left":
+							panel.worldX += 40;
+							break;
+					}
+					panel.obj[7] = null;
+
+				}
+				test = "witch";
+				
+				if(item.equalsIgnoreCase(test))
+				{
+					stopMovement();
+					panel.combat = true;
+					stopMovement();
+					combat(test);
+					switch(panel.p.direction)
+					{
+						case "up":
+							panel.worldY += 40;
+							break;
+						case "down":
+							panel.worldY -= 40;
+							break;
+						case "right":
+							panel.worldX -= 40;
+							break;
+						case "left":
+							panel.worldX += 40;
+							break;
+					}
+					panel.obj[8] = null;
+					panel.obj[9] = null;
+				}
+			}
+			else if (play == 10)
+			{
+			}
 			if (playerLoc == 3 && answeredRiddle == true)//stairs
 			{
 					int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -839,64 +947,5 @@ public class MyFavProgThatILove
 		return Damage;
 
 	}
-	/**
-	 * Saves data to file
-	 * @param name is the players name
-         * @param lives number of lives the player has
-	 * @param floor the floor number the player is on
-	 */ 
-	/**  
-	Public SaveFile(String name, int lives, int floor)
-	{
-	    String[] saveFile = {"1","2", "3"}; 
-	    String input = (String) JOptionPane.showInputDialog(null,"Which file do you want to save your game in? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
-	    if (input.equals("1"))
-	    {
-	        try
-	        {
-	            File fileOne = new File("fileOne.txt"); // loads file
-	            PrintWriter write = new PrintWriter(fileOne); // creates file writer 
-	            write.println(name); // writes important data into file
-	            write.println(lives);
-	            write.println(floor);
-	            write.close();
-	        }
-	        catch(Exception e)
-	            System.out.println("Error");
-	           
-	        
-	    }
-	    else if (input.equals("2"))
-	    {
-	        try
-	        {
-	            File fileTwo = new File("fileTwo.txt");
-	            PrintWriter write = new PrintWriter(fileTwo);
-	            write.println(name);
-	            write.println(lives);
-	            write.println(floor);
-	            write.close();
-	        }
-	        catch(Exception e)
-	            System.out.println("Error");
-	    }
-	    else if (input.equals("3"))
-	    {
-	        try
-	        {
-	            File fileOne = new File("fileOne.txt");
-	            PrintWriter write = new PrintWriter(fileOne);
-	            write.println(name);
-	            write.println(lives);             
-	            write.println(floor);
-	            write.close();
-	        }
-	        catch(Exception e)
-	            System.out.println("Error");
-	    }
-	    else
-	        System.out.println("?");
-	}
-	*/
 }
 
