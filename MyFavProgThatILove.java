@@ -3,7 +3,7 @@
 *
 * @author Neysa Thota
 * @version 1.0
-* date: 4/22/2024
+* @since 4/22/2024
 */ 
 
 import java.awt.*;//needed for graphic 
@@ -823,5 +823,64 @@ public class MyFavProgThatILove
 		return Damage;
 
 	}
+	/**
+	 * Saves data to file
+	 * @param name is the players name
+         * @param lives number of lives the player has
+	 * @param floor the floor number the player is on
+	 */ 
+	/**  
+	Public SaveFile(String name, int lives, int floor)
+	{
+	    String[] saveFile = {"1","2", "3"}; 
+	    String input = (String) JOptionPane.showInputDialog(null,"Which file do you want to save your game in? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
+	    if (input.equals("1"))
+	    {
+	        try
+	        {
+	            File fileOne = new File("fileOne.txt"); // loads file
+	            PrintWriter write = new PrintWriter(fileOne); // creates file writer 
+	            write.println(name); // writes important data into file
+	            write.println(lives);
+	            write.println(floor);
+	            write.close();
+	        }
+	        catch(Exception e)
+	            System.out.println("Error");
+	           
+	        
+	    }
+	    else if (input.equals("2"))
+	    {
+	        try
+	        {
+	            File fileTwo = new File("fileTwo.txt");
+	            PrintWriter write = new PrintWriter(fileTwo);
+	            write.println(name);
+	            write.println(lives);
+	            write.println(floor);
+	            write.close();
+	        }
+	        catch(Exception e)
+	            System.out.println("Error");
+	    }
+	    else if (input.equals("3"))
+	    {
+	        try
+	        {
+	            File fileOne = new File("fileOne.txt");
+	            PrintWriter write = new PrintWriter(fileOne);
+	            write.println(name);
+	            write.println(lives);             
+	            write.println(floor);
+	            write.close();
+	        }
+	        catch(Exception e)
+	            System.out.println("Error");
+	    }
+	    else
+	        System.out.println("?");
+	}
+	*/
 }
 
