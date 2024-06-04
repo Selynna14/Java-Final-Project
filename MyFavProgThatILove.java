@@ -64,15 +64,13 @@ public class MyFavProgThatILove
 		//groundFloor();
 		//panel.setFirstFloor();
 		
-		currLevel = 2;
-		panel.setSecondFloor();
-		secondFloor();
+		currLevel = 0;
 		
 		WeponList.add("Hand");
 		// code
 		String[] loadFile = {"1","2", "3"};
 		String input5 = (String) JOptionPane.showInputDialog(null,"Which file do you want to play out of? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
-		if (input2.equals("1"))
+		if (input5.equals("1"))
 		{
 			try
 			{ // starts try
@@ -81,30 +79,36 @@ public class MyFavProgThatILove
 				{
 					System.out.println("Good");
 				}
-		
-		/*while (winGame == false)
-		{	
-			switch(currLevel)
-			{
-				case 0:
-					panel.setGroundFloor();
-					groundFloor();
-					break;
-				case 1:
-					panel.setFirstFloor();
-					firstFloor();
-					break;
-				case 2:
-					panel.setSecondFloor();
-					secondFloor();
-					break;
-				case 3:
-					panel.setThirdFloor();
-					thirdFloor();
-					break;
-				default:
 			}
-		}*/
+			catch(Exception e)
+			{
+			System.out.println( "Error " + e);
+			}
+			while (winGame == false)
+			{	
+				switch(currLevel)
+				{
+					case 0:
+						panel.setGroundFloor();
+						groundFloor();
+						break;
+					case 1:
+						panel.setFirstFloor();
+						firstFloor();
+						break;
+					case 2:
+						panel.setSecondFloor();
+						secondFloor();
+						break;
+					case 3:
+						panel.setThirdFloor();
+						thirdFloor();
+						break;
+					default:
+				}
+			}
+		}
+	}	
 		
 		/*if (winGame == true)
 		{
@@ -114,7 +118,7 @@ public class MyFavProgThatILove
 			System.exit(0);
 
 		}*/
-	}
+	
 	
 	/**
 	 * This method turns all the movement booleans to false to stop the charcter from moving 
@@ -550,21 +554,13 @@ public class MyFavProgThatILove
 		{
 			playerLoc = findPlayerTileLocation();
 			System.out.println(playerLoc);
-			
-			/*if (currLevel == 2)//making sure the player cant go down
-			{
-				if (panel.worldY >= 1288)
-				{
-					panel.worldY -= 20;
-				}
-			}*/
 			play = panel.findObjNum();
 			test = "";
 			
 			if (play != 20)
 			{
-					String item = panel.obj[play].name;
-					//System.out.println(item);
+				String item = panel.obj[play].name;
+				//System.out.println(item);
 			
 				test = "chest";
 				if (item.equalsIgnoreCase(test) && interactedWithChest == false)//chest
@@ -635,6 +631,9 @@ public class MyFavProgThatILove
 				{
 					stopMovement();
 					panel.combat = true;
+					JOptionPane.showMessageDialog(null," There’s a zombie!" );
+					stopMovement();
+					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
 					stopMovement();
 					combat(test);
 					switch(panel.p.direction)
@@ -653,15 +652,7 @@ public class MyFavProgThatILove
 							break;
 					}
 					panel.obj[7] = null;
-				}
-				if (item.equalsIgnoreCase("zombie"))
-				{
-					stopMovement();
-					JOptionPane.showMessageDialog(null," There’s a zombie!" );
-					stopMovement();
-					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
-					//combat();
-
+					panel.obj[12] = null;
 				}
 				
 				test = "witch";
@@ -670,7 +661,7 @@ public class MyFavProgThatILove
 					stopMovement();
 					panel.combat = true;
 					stopMovement();
-					combat(test);
+					
 					switch(panel.p.direction)
 					{
 						case "up":
@@ -692,26 +683,29 @@ public class MyFavProgThatILove
 						{
 							stopMovement();
 							JOptionPane.showMessageDialog(null," There’s a witch!" );
+							JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+							combat(test);
 						} 
 						stopMovement();
-						JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+						
 						panel.combat = false;
 						//combat();
-						if (panel.combat == false && potionsAddToInventory ==  false)
-						{
-							stopMovement();
-							JOptionPane.showMessageDialog(null,"The witches dropped 3 potions, I'll add them to your inventory ");
-					//add potions to inventory
-						}
+					if (panel.combat == false && potionsAddToInventory ==  false)
+					{
+						stopMovement();
+						JOptionPane.showMessageDialog(null,"The witches dropped 3 potions, I'll add them to your inventory ");
+				//add potions to inventory
+					}
 					panel.obj[8] = null;
 					panel.obj[9] = null;
 				}
 			}
 				
 			}
-			else if (play == 10)
+			else if (play == 20)
 			{
 			}
+			
 			if (playerLoc == 3 && answeredRiddle == true)//stairs
 			{
 					int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -936,6 +930,42 @@ public class MyFavProgThatILove
 					
 					//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHH
 				}
+				else if (monster.equals("witch")) //zombie
+				{
+					MonsterHealth = 20;
+					System.out.println(MonsterHealth);
+					Object[] weapons = WeponList.toArray();
+					while (MonsterHealth > 0) // loops while the monster is alive
+					{
+						String input = (String) JOptionPane.showInputDialog(null,"How would you like to attack?", "", JOptionPane.QUESTION_MESSAGE, null, weapons, weapons[0]);
+						switch(input) 
+						{
+							case "Hand": // code block 
+								Damge = randObject.nextInt(0,5); // does a randObject.nextInt amount of damage from 0 to 4
+								break;
+							case "Axe": // code block 
+								Damge = randObject.nextInt(5,10); 
+								break;
+							case "Sword": // code block 
+								Damge = randObject.nextInt(8,12);
+								break;
+							case "Poison Sword": // code block 
+								Damge = randObject.nextInt(10,14);
+								break;
+							case "Poison Axe": // code block 
+								Damge = randObject.nextInt(7,12);
+								break;
+							default: // code block 
+						} 
+						
+						MonsterHealth -= Damge;
+					}
+					
+					panel.combat = false;
+					JOptionPane.showMessageDialog(null, "You beat the Monster. Yayy");
+					
+					//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHH
+				}
 
 				/*if (tileNum == 21) //need colitions
 				{
@@ -1028,4 +1058,3 @@ public class MyFavProgThatILove
 
 	}
 }
-
