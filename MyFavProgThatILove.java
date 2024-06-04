@@ -68,7 +68,6 @@ public class MyFavProgThatILove
 		
 		WeponList.add("Hand");
 		// code
-		
 		String[] loadFile = {"1","2", "3"};
 		String input5 = (String) JOptionPane.showInputDialog(null,"Which file do you want to play out of? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
 		if (input5.equals("1"))
@@ -80,74 +79,6 @@ public class MyFavProgThatILove
 				{
 					System.out.println("Good");
 				}
-				else
-				{
-					name = Files.readAllLines(Paths.get("fileOne.txt")).get(0);
-					line2 = Files.readAllLines(Paths.get("fileOne.txt")).get(1);
-					floor = Files.readAllLines(Paths.get("fileOne.txt")).get(2);
-					health = Integer.parseInt(line2);
-				}
-				
-			} // ends try
-			catch(Exception e)
-			{ // starts catch
-				System.out.println("Error! " + e);
-			} // ends catch
-		
-		}
-		else if (input5.equals("2"))
-		{
-			try
-			{ // starts try
-				File fileTwo = new File("fileTwo.txt"); // Go find and load file
-				if (fileTwo.createNewFile())
-				{
-					System.out.println("Good");
-				}
-				else
-				{
-					name = Files.readAllLines(Paths.get("fileTwo.txt")).get(0);
-					line2 = Files.readAllLines(Paths.get("fileTwo.txt")).get(1);
-					floor = Files.readAllLines(Paths.get("fileTwo.txt")).get(2);
-					health = Integer.parseInt(line2);
-				}
-				
-			} // ends try
-			catch(Exception e)
-			{ // starts catch
-				System.out.println("Error! " + e);
-			} // ends catch
-
-		}
-		else if (input5.equals("3"))
-		{
-			try
-			{ // starts try
-				File fileThree = new File("fileThree.txt"); // Go find and load file
-				if (fileThree.createNewFile())
-				{
-					System.out.println("Good");
-				}
-			        else
-				{
-							
-					name = Files.readAllLines(Paths.get("fileThree.txt")).get(0);
-					line2 = Files.readAllLines(Paths.get("fileThree.txt")).get(1);
-					floor = Files.readAllLines(Paths.get("fileThree.txt")).get(2);
-					health = Integer.parseInt(line2);
-							
-				}
-				
-			} // ends try
-			catch(Exception e)
-			{ // starts catch
-				System.out.println("Error! " + e);
-			} // ends catch
-
-		}
-		else
-			System.out.println("?");
-		
 			}
 			catch(Exception e)
 			{
@@ -525,7 +456,7 @@ public class MyFavProgThatILove
 						else if (dialogButton == JOptionPane.NO_OPTION) 
 						{
 							JOptionPane.showMessageDialog(null, "GAME OVER");
-							//SaveFile(name,lives, currFloor);
+							//SaveFile(name,lives, currFloor)
 							panel.h.interrupt(); //here i need to destroy the thread
 							frame.setVisible(false); //visibility to off
 							System.exit(0);
@@ -618,6 +549,7 @@ public class MyFavProgThatILove
 		passedFloor = false;
 		boolean potionsAddToInventory = false;
 		boolean interactedWithChest = false;
+		boolean introWindow =true;
 		
 		while(panel.gameRuns = true && passedFloor == false)
 		{
@@ -692,6 +624,7 @@ public class MyFavProgThatILove
 					stopMovement();
 					JOptionPane.showMessageDialog(null,"Go to the next floor, :(");	
 					panel.worldY += panel.tileSize;
+					
 				}
 					
 				test = "zombie";
@@ -779,7 +712,7 @@ public class MyFavProgThatILove
 			{
 					int dialogButton = JOptionPane.YES_NO_OPTION;
 					stopMovement();
-					dialogButton = JOptionPane.showConfirmDialog (null, "Do you want to proceed, you cant go back?","Last Level, yayyy", dialogButton);
+					dialogButton = JOptionPane.showConfirmDialog (null, "Do you want to proceed, you can't go back?","Last Level, yayyy", dialogButton);
 					
 					if(dialogButton == JOptionPane.NO_OPTION) 
 					{
@@ -798,9 +731,33 @@ public class MyFavProgThatILove
 			{
 				stopMovement();
 				JOptionPane.showMessageDialog(null, "Answer the riddle before you move on");
+				switch(panel.p.direction)
+					{
+						case "up":
+							panel.worldY += 40;
+							break;
+						case "down":
+							panel.worldY += 40;
+							break;
+						case "right":
+							panel.worldY += 40;
+							break;
+						case "left":
+							panel.worldY += 40;
+							break;
+					}
 
 			}
-			if (playerLoc == 5)//window
+			if(playerLoc == 5 && introWindow == true)//window
+			{
+				stopMovement();
+				JOptionPane.showMessageDialog(null, "You can press J to jump");
+				panel.worldX -= panel.tileSize;
+				introWindow = false;
+				
+			}
+						
+			if (playerLoc == 5 && introWindow == false)//window
 			{
 				
 				if(panel.jPressed == true)
@@ -819,12 +776,11 @@ public class MyFavProgThatILove
 						{
 							panel.worldX = 648;
 							panel.worldY = 318;
-							currLevel = 1;
+							currLevel = 2;
 						}
 						else if (dialogButton == JOptionPane.NO_OPTION) 
 						{
 							JOptionPane.showMessageDialog(null, "GAME OVER");
-							//SaveFile(name,lives, currFloor);
 							panel.h.interrupt(); //here i need to destroy the thread
 							frame.setVisible(false); //visibility to off
 							System.exit(0);
@@ -864,28 +820,334 @@ public class MyFavProgThatILove
 		
 		int levCompleted = 0;
 		passedFloor = false;
+		boolean answeredRiddle = false;
+		boolean interactedWithChest1 = false;
+		boolean interactedWithChest2 = false;
+		boolean interactedWithChest3 = false;
+		boolean introWindow =true;
 		
 		
 		while(panel.gameRuns = true && passedFloor == false)
 		{
-			if (levCompleted <= 3)
+			playerLoc = findPlayerTileLocation();
+			System.out.println(playerLoc);
+			play = panel.findObjNum();
+			test = "";
+			
+			if (play != 20)
+			{
+				String item = panel.obj[play].name;
+				test = "scroll";
+				if (item.equalsIgnoreCase(test) && answeredRiddle == false)//scroll
+				{
+					stopMovement();
+					String answer;
+					JOptionPane.showMessageDialog(null, "You have to answer a cipher to move on");
+					JOptionPane.showMessageDialog(null, "ZCUYPC-MD-RFC-FMSQC?");
+					answer = JOptionPane.showInputDialog(null, "Input your answer(no - in answer):");
+					
+					if (answer.equalsIgnoreCase("beware of the house"))
+					{
+						JOptionPane.showMessageDialog(null,"You win!");
+						answeredRiddle = true;
+						winGame=true;
+					}
+					else 
+					{
+						JOptionPane.showMessageDialog(null,"You answered the cipher wrong, try again");	
+						JOptionPane.showMessageDialog(null,"Here's a hint: y=a, try again");	
+					}
+				}
+				
+				if (item.equalsIgnoreCase(test) && answeredRiddle == true)
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null,"You magically escaped.");	
+					panel.worldY += panel.tileSize;
+					panel.h.interrupt(); //here i need to destroy the thread
+					frame.setVisible(false); //visibility to off
+					System.exit(0);
+					break;
+					
+				}
+				test = "sword";
+				if (item.equalsIgnoreCase(test))
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null, "You found an iron sword, adding this to inventory");
+					
+					panel.worldX -= 20;
+					//add axe to inventory
+					WeponList.add("sword");
+					inventory.add("sword");
+					panel.obj[2] = null;
+				}
+				test = "chest1";
+				if (item.equalsIgnoreCase(test) && interactedWithChest1 == false)//chest
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null, "You have encountered a chest");
+					JOptionPane.showMessageDialog(null, "You found a hint for your cipher inside.");
+					JOptionPane.showMessageDialog(null, "Use a cipher wheel.");
+					interactedWithChest1 = true;
+					
+				}
+				else if  (item.equalsIgnoreCase(test) && interactedWithChest1 == true)
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null, "You might wanna use the hint to answer the cipher.");
+					switch(panel.p.direction)
+					{
+						case "up":
+							stopMovement();
+							panel.worldY += 40;
+							break;
+						case "down":
+							stopMovement();
+							panel.worldY -= 40;
+							break;
+						case "right":
+							stopMovement();
+							panel.worldX -= 40;
+							break;
+						case "left":
+							stopMovement();
+							panel.worldX += 40;
+							break;
+					}
+				
+				}	
+				test = "chest2";
+				if (item.equalsIgnoreCase(test) && interactedWithChest2 == false)//chest
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null, "You have encountered a chest full of poison gas. ");
+					
+					JOptionPane.showMessageDialog(null, "You died");
+					int dialogButton = JOptionPane.YES_NO_OPTION;
+					dialogButton = JOptionPane.showConfirmDialog (null, "Would you like to respawn?","Respawn", dialogButton);
+					
+					if(dialogButton == JOptionPane.YES_OPTION) 
+					{
+						panel.worldX = 648;
+						panel.worldY = 318;
+						currLevel = 3;
+						stopMovement();
+						lives--;
+						JOptionPane.showMessageDialog(null, "You lost a life");
+
+					}
+					else if (dialogButton == JOptionPane.NO_OPTION) 
+					{
+						JOptionPane.showMessageDialog(null, "GAME OVER");
+						//SaveFile(name,lives, currFloor)
+						panel.h.interrupt(); //here i need to destroy the thread
+						frame.setVisible(false); //visibility to off
+						System.exit(0);
+						break;
+						
+					}
+					interactedWithChest2 = true;
+					
+				}
+				else if  (item.equalsIgnoreCase(test) && interactedWithChest2 == true)
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null, "The gas escaped already.");
+					switch(panel.p.direction)
+					{
+						case "up":
+							stopMovement();
+							panel.worldY += 40;
+							break;
+						case "down":
+							stopMovement();
+							panel.worldY -= 40;
+							break;
+						case "right":
+							stopMovement();
+							panel.worldX -= 40;
+							break;
+						case "left":
+							stopMovement();
+							panel.worldX += 40;
+							break;
+					}
+				
+				}	
+				test = "chest3";
+				if (item.equalsIgnoreCase(test) && interactedWithChest3 == false)//chest
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null, "You have encountered a chest");
+					JOptionPane.showMessageDialog(null, "You found a joke inside.");
+					JOptionPane.showMessageDialog(null, "What do you call a fish without eyes? ");
+					JOptionPane.showMessageDialog(null, "answer: fsh");
+					interactedWithChest3 = true;
+					
+				}
+				else if  (item.equalsIgnoreCase(test) && interactedWithChest3 == true)
+				{
+					stopMovement();
+					switch(panel.p.direction)
+					{
+						case "up":
+							stopMovement();
+							panel.worldY += 40;
+							break;
+						case "down":
+							stopMovement();
+							panel.worldY -= 40;
+							break;
+						case "right":
+							stopMovement();
+							panel.worldX -= 40;
+							break;
+						case "left":
+							stopMovement();
+							panel.worldX += 40;
+							break;
+					}
+				
+				}	
+				test = "skeleton";
+				if(item.equalsIgnoreCase(test))
+				{
+					stopMovement();
+					panel.combat = true;
+					stopMovement();
+					
+					switch(panel.p.direction)
+					{
+						case "up":
+							panel.worldY += 40;
+							break;
+						case "down":
+							panel.worldY -= 40;
+							break;
+						case "right":
+							panel.worldX -= 40;
+							break;
+						case "left":
+							panel.worldX += 40;
+							break;
+					}
+					if (panel.combat == true)//fighitng section
+					{
+						if (item.equalsIgnoreCase("skeleton"))
+						{
+							stopMovement();
+							JOptionPane.showMessageDialog(null," There’s a skeleton!" );
+							JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+							combat(test);
+						} 
+						stopMovement();
+						
+						panel.combat = false;
+						//combat();
+					if (panel.combat == false)
+					{
+						stopMovement();
+						JOptionPane.showMessageDialog(null,"The skeleton collapsed.");
+				//add potions to inventory
+					}
+					panel.obj[5] = null;
+					panel.obj[6] = null;
+				}
+			}
+			test = "pixies";
+				if(item.equalsIgnoreCase(test))
+				{
+					stopMovement();
+					panel.combat = true;
+					stopMovement();
+					
+					switch(panel.p.direction)
+					{
+						case "up":
+							panel.worldY += 40;
+							break;
+						case "down":
+							panel.worldY -= 40;
+							break;
+						case "right":
+							panel.worldX -= 40;
+							break;
+						case "left":
+							panel.worldX += 40;
+							break;
+					}
+					if (panel.combat == true)//fighitng section
+					{
+						if (item.equalsIgnoreCase("pixies"))
+						{
+							stopMovement();
+							JOptionPane.showMessageDialog(null," There are pixies!" );
+							JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+							combat(test);
+						} 
+						stopMovement();
+						
+						panel.combat = false;
+						//combat();
+					if (panel.combat == false)
+					{
+						stopMovement();
+						JOptionPane.showMessageDialog(null,"The pixies dropped dead on the floor.");
+				//add potions to inventory
+					}
+					panel.obj[7] = null;
+					panel.obj[8] = null;
+					panel.obj[9] = null;
+				}
+			}
+			if(playerLoc == 5 && introWindow == true)//window
 			{
 				stopMovement();
-				winGame = true;
-				JOptionPane.showMessageDialog(null, "Answer the riddle before you move on");
-
-					
+				JOptionPane.showMessageDialog(null, "You can press J to jump");
+				panel.worldX -= panel.tileSize;
+				introWindow = false;
+				
 			}
-			
-			if (currLevel == 2)//making sure the player cant go down
+						
+			if (playerLoc == 5 && introWindow == false)//window
 			{
-				if (panel.worldY >= 584)
+				
+				if(panel.jPressed == true)
 				{
-					panel.worldY -= 20;
+					stopMovement();
+					int yesno = JOptionPane.YES_NO_OPTION;
+					yesno = JOptionPane.showConfirmDialog (null, "Would you like to jump?","JUMP", yesno);
+					
+					if(yesno == JOptionPane.YES_OPTION) 
+					{
+						JOptionPane.showMessageDialog(null, "You died");
+						int dialogButton = JOptionPane.YES_NO_OPTION;
+						dialogButton = JOptionPane.showConfirmDialog (null, "Would you like to respawn?","Respawn", dialogButton);
+						
+						if(dialogButton == JOptionPane.YES_OPTION) 
+						{
+							panel.worldX = 648;
+							panel.worldY = 318;
+							currLevel = 2;
+						}
+						else if (dialogButton == JOptionPane.NO_OPTION) 
+						{
+							JOptionPane.showMessageDialog(null, "GAME OVER");
+							panel.h.interrupt(); //here i need to destroy the thread
+							frame.setVisible(false); //visibility to off
+							System.exit(0);
+							break;
+						}
+					}
+					else 
+					{
+						panel.worldX -= panel.p.speed*4;
+					}
 				}
 			}
 		}	
-		
+	}
 	}
 	/**
 	 * Saves data to file
@@ -893,7 +1155,7 @@ public class MyFavProgThatILove
          * @param lives number of lives the player has
 	 * @param floor the floor number the player is on
 	 */ 
-	
+	/**  
 	Public SaveFile(String name, int lives, int floor)
 	{
 	    String[] saveFile = {"1","2", "3"}; 
@@ -945,7 +1207,7 @@ public class MyFavProgThatILove
 	    else
 	        System.out.println("?");
 	}
-	
+	*/
 	/**
 	 * This method turns all the movement booleans to false to stop the charcter from moving 
 	 * @param tileNum is the player's location showing which monster the player is fighting, so that the method can get the right values for the right monsters
@@ -1000,7 +1262,69 @@ public class MyFavProgThatILove
 					
 					//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHH
 				}
-				else if (monster.equals("witch")) //zombie
+				else if (monster.equals("witch")) //witch
+				{
+					MonsterHealth = 20;
+					System.out.println(MonsterHealth);
+					Object[] weapons = WeponList.toArray();
+					while (MonsterHealth > 0) // loops while the monster is alive
+					{
+						String input = (String) JOptionPane.showInputDialog(null,"How would you like to attack?", "", JOptionPane.QUESTION_MESSAGE, null, weapons, weapons[0]);
+						switch(input) 
+						{
+							case "Hand": // code block 
+								Damge = randObject.nextInt(0,5); // does a randObject.nextInt amount of damage from 0 to 4
+								break;
+							case "Axe": // code block 
+								Damge = randObject.nextInt(5,10); 
+								break;
+							case "Sword": // code block 
+								Damge = randObject.nextInt(8,12);
+								break;
+							case "Poison Sword": // code block 
+								Damge = randObject.nextInt(10,14);
+								break;
+							case "Poison Axe": // code block 
+								Damge = randObject.nextInt(7,12);
+								break;
+							default: // code block 
+						} 
+						
+						MonsterHealth -= Damge;
+					}
+				}
+					else if (monster.equals("skeleton")) //skeleton
+				{
+					MonsterHealth = 30;
+					System.out.println(MonsterHealth);
+					Object[] weapons = WeponList.toArray();
+					while (MonsterHealth > 0) // loops while the monster is alive
+					{
+						String input = (String) JOptionPane.showInputDialog(null,"How would you like to attack?", "", JOptionPane.QUESTION_MESSAGE, null, weapons, weapons[0]);
+						switch(input) 
+						{
+							case "Hand": // code block 
+								Damge = randObject.nextInt(0,5); // does a randObject.nextInt amount of damage from 0 to 4
+								break;
+							case "Axe": // code block 
+								Damge = randObject.nextInt(5,10); 
+								break;
+							case "Sword": // code block 
+								Damge = randObject.nextInt(8,12);
+								break;
+							case "Poison Sword": // code block 
+								Damge = randObject.nextInt(10,14);
+								break;
+							case "Poison Axe": // code block 
+								Damge = randObject.nextInt(7,12);
+								break;
+							default: // code block 
+						} 
+						
+						MonsterHealth -= Damge;
+					}
+				}
+					else if (monster.equals("pixies")) //zombie
 				{
 					MonsterHealth = 20;
 					System.out.println(MonsterHealth);
@@ -1036,45 +1360,7 @@ public class MyFavProgThatILove
 					
 					//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHH
 				}
-
-				/*if (tileNum == 21) //need colitions
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie(panel);
-					zom[0] = new Zombie(panel);
-					MonsterHealth = z.getMonsterHealth();
-					System.out.println(MonsterHealth);	
-					destroyMonster(MonsterHealth);	
-
-				}
 				
-				if (tileNum == 22) //need colitions
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie(panel);
-					zom[0] = new Zombie(panel);
-					MonsterHealth = z.getMonsterHealth();		
-					//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHHH
-				}
-
-				if (tileNum == 23) //need colitions
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie(panel);
-					zom[0] = new Zombie(panel);
-					MonsterHealth = z.getMonsterHealth();		
-					destroyMonster(MonsterHealth);
-
-				}
-
-				if (tileNum == 24) //need colitions
-				{
-					Zombie[] zom = new Zombie[3];
-					Zombie z = new Zombie(panel);
-					zom[0] = new Zombie(panel);
-					MonsterHealth = z.getMonsterHealth();		
-				}*/
-
 			}
 		}
 		catch(Exception e)
