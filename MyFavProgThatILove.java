@@ -525,7 +525,7 @@ public class MyFavProgThatILove
 						else if (dialogButton == JOptionPane.NO_OPTION) 
 						{
 							JOptionPane.showMessageDialog(null, "GAME OVER");
-							//SaveFile(name,lives, currFloor)
+							//SaveFile(name,lives, currFloor);
 							panel.h.interrupt(); //here i need to destroy the thread
 							frame.setVisible(false); //visibility to off
 							System.exit(0);
@@ -824,6 +824,7 @@ public class MyFavProgThatILove
 						else if (dialogButton == JOptionPane.NO_OPTION) 
 						{
 							JOptionPane.showMessageDialog(null, "GAME OVER");
+							//SaveFile(name,lives, currFloor);
 							panel.h.interrupt(); //here i need to destroy the thread
 							frame.setVisible(false); //visibility to off
 							System.exit(0);
