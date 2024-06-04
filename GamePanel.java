@@ -35,7 +35,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	Tile[] tile;
 	int mapTileNum[][];
 	Player p = new Player(this);
-	Obj obj[] = new Obj[10];
+	Obj obj[] = new Obj[20];
 	
 	MyFavProgThatILove f;
 	
@@ -160,6 +160,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		setObjectAttributes(7, 12, 16, "Zombie.png", "zombie");
 		setObjectAttributes(8, 29, 13, "Witch.png", "witch");
 		setObjectAttributes(9, 30, 13, "Witch.png", "witch");
+		setObjectAttributes(10, 40, 14, "Pile_of_clothes.png", "clothes");
+		setObjectAttributes(11, 22, 21, "cabinet.png", "cabinet");
+		setObjectAttributes(12, 13, 16, "Zombie.png", "zombie");
 
 	}
 	
