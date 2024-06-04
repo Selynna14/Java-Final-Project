@@ -15,6 +15,7 @@ import java.nio.file.Files; // needed for file reading
 import java.nio.file.Path; // needed for file reading
 import java.nio.file.Paths; // needed for file reading
 
+
 public class MyFavProgThatILove
 {	
 	/**
@@ -60,7 +61,11 @@ public class MyFavProgThatILove
 		
 		//panel.setGroundFloor();
 		//groundFloor();
-		panel.setFirstFloor();
+		//panel.setFirstFloor();
+		
+		currLevel = 2;
+		panel.setSecondFloor();
+		secondFloor();
 		
 		WeponList.add("Hand");
 		// code
@@ -76,7 +81,7 @@ public class MyFavProgThatILove
 					System.out.println("Good");
 				}
 		
-		while (winGame == false)
+		/*while (winGame == false)
 		{	
 			switch(currLevel)
 			{
@@ -98,7 +103,7 @@ public class MyFavProgThatILove
 					break;
 				default:
 			}
-		}
+		}*/
 		
 		/*if (winGame == true)
 		{
@@ -209,7 +214,7 @@ public class MyFavProgThatILove
 			play = panel.findObjNum();
 			test = "chair";
 			
-			if (play != 10)
+			if (play != 20)
 			{
 					String item = panel.obj[play].name;
 					System.out.println(item);
@@ -221,7 +226,7 @@ public class MyFavProgThatILove
 					JOptionPane.showMessageDialog(null, " Bruh its just a chair ");
 				}
 			}
-			else if (play == 10)
+			else if (play == 20)
 			{
 			}
 			
@@ -299,7 +304,7 @@ public class MyFavProgThatILove
 			play = panel.findObjNum();
 			test = "";
 			
-			if (play != 10)
+			if (play != 20)
 			{
 					String item = panel.obj[play].name;
 					//System.out.println(item);
@@ -405,7 +410,7 @@ public class MyFavProgThatILove
 					panel.obj[9] = null;
 				}
 			}
-			else if (play == 10)
+			else if (play == 20)
 			{
 			}
 			
@@ -555,7 +560,7 @@ public class MyFavProgThatILove
 			play = panel.findObjNum();
 			test = "";
 			
-			if (play != 10)
+			if (play != 20)
 			{
 					String item = panel.obj[play].name;
 					//System.out.println(item);
@@ -577,15 +582,19 @@ public class MyFavProgThatILove
 					switch(panel.p.direction)
 					{
 						case "up":
+							stopMovement();
 							panel.worldY += 40;
 							break;
 						case "down":
+							stopMovement();
 							panel.worldY -= 40;
 							break;
 						case "right":
+							stopMovement();
 							panel.worldX -= 40;
 							break;
 						case "left":
+							stopMovement();
 							panel.worldX += 40;
 							break;
 					}
@@ -643,10 +652,18 @@ public class MyFavProgThatILove
 							break;
 					}
 					panel.obj[7] = null;
+				}
+				if (item.equalsIgnoreCase("zombie"))
+				{
+					stopMovement();
+					JOptionPane.showMessageDialog(null," There’s a zombie!" );
+					stopMovement();
+					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+					//combat();
 
 				}
-				test = "witch";
 				
+				test = "witch";
 				if(item.equalsIgnoreCase(test))
 				{
 					stopMovement();
@@ -668,9 +685,28 @@ public class MyFavProgThatILove
 							panel.worldX += 40;
 							break;
 					}
+					if (panel.combat == true)//fighitng section
+					{
+						if (item.equalsIgnoreCase("witch"))
+						{
+							stopMovement();
+							JOptionPane.showMessageDialog(null," There’s a witch!" );
+						} 
+						stopMovement();
+						JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
+						panel.combat = false;
+						//combat();
+						if (panel.combat == false && potionsAddToInventory ==  false)
+						{
+							stopMovement();
+							JOptionPane.showMessageDialog(null,"The witches dropped 3 potions, I'll add them to your inventory ");
+					//add potions to inventory
+						}
 					panel.obj[8] = null;
 					panel.obj[9] = null;
 				}
+			}
+				
 			}
 			else if (play == 10)
 			{
@@ -679,7 +715,7 @@ public class MyFavProgThatILove
 			{
 					int dialogButton = JOptionPane.YES_NO_OPTION;
 					stopMovement();
-					dialogButton = JOptionPane.showConfirmDialog (null, "Do You want to proceed, you cant go back?","Last Level, yayyy", dialogButton);
+					dialogButton = JOptionPane.showConfirmDialog (null, "Do you want to proceed, you cant go back?","Last Level, yayyy", dialogButton);
 					
 					if(dialogButton == JOptionPane.NO_OPTION) 
 					{
@@ -748,35 +784,6 @@ public class MyFavProgThatILove
 			{
 				panel.worldY += 20;
 				panel.combat = true;
-			}
-			
-			if (panel.combat == true)//fighitng section
-			{
-				if (playerLoc == 22)
-				{
-					stopMovement();
-					JOptionPane.showMessageDialog(null," There’s a witch!" );
-				} 
-					stopMovement();
-					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
-					panel.combat = false;
-					//combat();
-					
-				if (panel.combat == false && potionsAddToInventory ==  false)
-				{
-					stopMovement();
-					JOptionPane.showMessageDialog(null,"The witches dropped 3 potions, I'll add them to your inventory ");
-					//add potions to inventory
-				}
-				
-				if (playerLoc == 20)
-				{
-					stopMovement();
-					JOptionPane.showMessageDialog(null," There’s a zombie!" );
-				} 
-					stopMovement();
-					JOptionPane.showMessageDialog(null," You are in combat! Don’t die!");
-					//combat();
 			}
 			
 		}
