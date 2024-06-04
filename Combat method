@@ -1,0 +1,108 @@
+public static void combat(String monster)
+	{
+		try
+		{
+			int MonsterHealth;
+			Zombie[] zom = new Zombie[3];
+			Zombie z = new Zombie(panel);
+			zom[0] = new Zombie(panel);
+			MonsterHealth = z.getMonsterHealth();
+			
+			while(panel.combat == true)
+			{
+				double Damge = 0; 
+
+					Object[] weapons = WeponList.toArray();
+					
+					while (MonsterHealth >= 0) // loops while the monster has health 
+					{
+						System.out.println("loop i sowrking");
+
+						if (panel.invincible == true)
+						{
+							//dont do anything
+						}
+
+						if (panel.doDamage == true)
+						{
+							if (panel.invincible == false)
+							{
+								panel.invincible = true;
+								Damge = randObject.nextInt(0,5); // does a randObject.nextInt amount of damage from 0 to 4
+								//Damge /= 5;
+								JOptionPane.showMessageDialog(null, "djskaljdklas working" + Damge + ", damgedecalred"+ MonsterHealth);
+							}
+						}
+						
+						if (panel.p.x.intersects(panel.z.monRect)) // this part works im so happy im acc gonna cry
+						{
+							System.out.println("PLayer is touching the zombie");
+
+							if (panel.invincible == false)
+							{
+								lives --;
+								panel.invincible = true;
+								System.out.println("PLayer is losing a lif3e to the zombie");
+							}
+						}
+						
+						MonsterHealth -= Damge;
+						Damge = 0;
+						
+						
+					}
+					
+					if (MonsterHealth <= 0)
+					{	
+						stopMovement();
+						panel.combat = false;
+						JOptionPane.showMessageDialog(null, "You beat the Monster. Yayy");
+					}
+				
+
+				/*if (tileNum == 21) //need colitions
+				{
+					Zombie[] zom = new Zombie[3];
+					Zombie z = new Zombie(panel);
+					zom[0] = new Zombie(panel);
+					MonsterHealth = z.getMonsterHealth();
+					System.out.println(MonsterHealth);	
+					destroyMonster(MonsterHealth);	
+
+				}
+				
+				if (tileNum == 22) //need colitions
+				{
+					Zombie[] zom = new Zombie[3];
+					Zombie z = new Zombie(panel);
+					zom[0] = new Zombie(panel);
+					MonsterHealth = z.getMonsterHealth();		
+					//Player health = Player health - Damage; //need player health // player is INVINCIBLE - RAHHHHHHH
+				}
+
+				if (tileNum == 23) //need colitions
+				{
+					Zombie[] zom = new Zombie[3];
+					Zombie z = new Zombie(panel);
+					zom[0] = new Zombie(panel);
+					MonsterHealth = z.getMonsterHealth();		
+					destroyMonster(MonsterHealth);
+
+				}
+
+				if (tileNum == 24) //need colitions
+				{
+					Zombie[] zom = new Zombie[3];
+					Zombie z = new Zombie(panel);
+					zom[0] = new Zombie(panel);
+					MonsterHealth = z.getMonsterHealth();		
+				}*/
+
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error! in combat class: " + e);
+		}
+
+	}
