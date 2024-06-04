@@ -9,9 +9,11 @@
 import java.awt.*;//needed for graphic 
 import javax.swing.*;//needed for the JFrame
 import java.awt.event.*;//needed for keylistener and keyevent
-import java.io.*; //needed fore file reading
+import java.io.*; //needed for file reading
 import java.util.*; // imports scanner class
-
+import java.nio.file.Files; // needed for file reading
+import java.nio.file.Path; // needed for file reading
+import java.nio.file.Paths; // needed for file reading
 
 public class MyFavProgThatILove
 {	
@@ -444,6 +446,7 @@ public class MyFavProgThatILove
 						else if (dialogButton == JOptionPane.NO_OPTION) 
 						{
 							JOptionPane.showMessageDialog(null, "GAME OVER");
+							//SaveFile(name,lives, currFloor)
 							panel.h.interrupt(); //here i need to destroy the thread
 							frame.setVisible(false); //visibility to off
 							System.exit(0);
