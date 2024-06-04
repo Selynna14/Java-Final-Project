@@ -68,7 +68,7 @@ public class MyFavProgThatILove
 		
 		WeponList.add("Hand");
 		// code
-		/**
+		
 		String[] loadFile = {"1","2", "3"};
 		String input5 = (String) JOptionPane.showInputDialog(null,"Which file do you want to play out of? ", "", JOptionPane.QUESTION_MESSAGE, null,loadFile, loadFile[2]);
 		if (input5.equals("1"))
@@ -147,7 +147,7 @@ public class MyFavProgThatILove
 		}
 		else
 			System.out.println("?");
-		**/
+		
 			}
 			catch(Exception e)
 			{
@@ -893,7 +893,7 @@ public class MyFavProgThatILove
          * @param lives number of lives the player has
 	 * @param floor the floor number the player is on
 	 */ 
-	/**  
+	
 	Public SaveFile(String name, int lives, int floor)
 	{
 	    String[] saveFile = {"1","2", "3"}; 
@@ -945,7 +945,7 @@ public class MyFavProgThatILove
 	    else
 	        System.out.println("?");
 	}
-	*/
+	
 	/**
 	 * This method turns all the movement booleans to false to stop the charcter from moving 
 	 * @param tileNum is the player's location showing which monster the player is fighting, so that the method can get the right values for the right monsters
