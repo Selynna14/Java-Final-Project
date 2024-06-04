@@ -171,13 +171,19 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	 */ 
 	public void setThirdFloor() 
 	{
-		setObjectAttributes(0, 22, 19, "cabinet.png", "door");
-		setObjectAttributes(1, 22, 18, "cabinet.png", "door");
-		setObjectAttributes(2, 41, 17, "cabinet.png", "door");
-		setObjectAttributes(4, 41, 21, "cabinet.png", "door");
-		setObjectAttributes(5, 39, 12, "Chair.png", "door");
-		setObjectAttributes(6, 38, 12, "table.png", "door");
-
+		setObjectAttributes(0, 22, 21, "cabinet.png", "cabinet");
+		setObjectAttributes(1, 23, 2, "Closed_scroll.png", "scroll");
+		setObjectAttributes(2, 32, 21, "IronSword.png", "sword");
+		setObjectAttributes(3, 23, 21, "cabinet.png", "cabinet");
+		setObjectAttributes(4, 39, 17, "Pile_of_clothes.png", "clothes");
+		setObjectAttributes(5, 39, 4, "Skeleton.png", "skeleton");
+		setObjectAttributes(6, 36, 4, "Skeleton.png", "skeleton");
+		setObjectAttributes(7, 34, 6, "Pixies.png", "pixies");
+		setObjectAttributes(8, 36, 6, "Pixies.png", "pixies");
+		setObjectAttributes(9, 38, 6, "Pixies.png", "pixies");
+		setObjectAttributes(10, 4, 19, "chest.png", "chest1");
+		setObjectAttributes(11, 4, 17, "chest.png", "chest2");
+		setObjectAttributes(12, 4, 15, "chest.png", "chest3");
 	}
 	
 	
